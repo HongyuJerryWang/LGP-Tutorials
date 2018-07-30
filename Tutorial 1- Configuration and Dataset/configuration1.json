@@ -1,0 +1,17 @@
+{
+    "initialMinimumProgramLength": 20,
+    "initialMaximumProgramLength": 40,
+    "operations": [
+        "lgp.lib.operations.Addition",
+        "lgp.lib.operations.Subtraction",
+        "lgp.lib.operations.Multiplication",
+	"lgp.lib.operations.IfGreater",
+        "lgp.lib.operations.IfLessThanOrEqualTo"
+    ],
+    "constants": [0.0, 1.0],
+    "populationSize": 500,
+    "generations": 1000,
+    "numOffspring": 10,
+    "numFeatures": 2,
+    "branchInitialisationRate": 0.1
+}
