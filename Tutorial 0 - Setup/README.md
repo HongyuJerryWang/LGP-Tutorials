@@ -6,13 +6,10 @@
 
 The system is built using Kotlin and the easiest way to use it is through the Kotlin API.
 
-If you don't have some of the tools on your UNIX based system, please first install them with:
+If you don't have curl on your UNIX based system, please first install curl with:
 
 ```
 sudo apt install curl
-sudo apt install upzip
-sudo apt install zip
-sudo apt install gnome-terminal
 ```
 
 According to [https://kotlinlang.org/docs/tutorials/command-line.html](https://kotlinlang.org/docs/tutorials/command-line.html), the simplest way to install Kotlin on UNIX based systems such as OS X, Linux, Cygwin, FreeBSD and Solaris is by using SDKMAN!. Simply run the following in a terminal and follow any instructions:
@@ -21,13 +18,7 @@ According to [https://kotlinlang.org/docs/tutorials/command-line.html](https://k
 curl -s https://get.sdkman.io | bash
 ```
 
-Next open a new terminal:
-
-```
-gnome-terminal
-```
-
-Install Kotlin in the newly-opened terminal with:
+Next open a new terminal and install Kotlin with:
 
 ```
 sdk install kotlin
@@ -43,26 +34,76 @@ The core API comes as a JAR file, which can be either built or downloaded.
 
 ### Building the API
 
-Please go to the [LGP repository](https://github.com/JedS6391/LGP), and clone it to your local computer. Using the Command Line, change into the directory
+
+If you don't have git on your UNIX based system, please install git with:
+
+```
+sudo apt install git
+```
+
+The API is in this [repository](https://github.com/JedS6391/LGP), please clone it to the local directory of your choice.
+
+```
+git clone https://github.com/JedS6391/LGP.git
+```
+
+Using the Command Line, change into the directory
 
 ```
 cd LGP
 ```
 
-Then build the API with
+To see if you have Java installed
+
+```
+java -version
+```
+
+If you don't have Java, please install Java with
+
+```
+sudo apt install default-jre
+```
+
+and then
+
+```
+sudo apt install default-jdk
+```
+
+With Java installed, build the API with
 
 ```
 ./gradlew coreJar
 ```
 
-This might take a which for it to gather all the dependencies required.
+This might take a while for it to gather all the dependencies required.
 
 In the *LGP* directory, you should now see a *build* directory, please go inside it, then go inside the *libs* directory, please look for the JAR file for the core API, e.g. **LGP-core-1.2.jar**. Move the JAR file to the directory you'd like to work in, and rename the file **LGP.jar** for simplicity.
 
 ### Downloading the API
 
-Please download the newest version from the [releases](https://github.com/JedS6391/LGP/releases) page. For example, as of when this tutorial is written, the top version on the page is 1.2.1, so please download the **LGP-core-1.2.jar** file in the *Assets* of version 1.2.1. Move the JAR file to the directory you'd like to work in, and rename the file **LGP.jar** for simplicity.
+Alternatively you can download the newest version from the [releases](https://github.com/JedS6391/LGP/releases) page. For example, as of when this tutorial is written, the top version on the page is 1.2.1, so please download the **LGP-core-1.2.jar** file in the *Assets* of version 1.2.1. Move the JAR file to the directory you'd like to work in, and rename the file **LGP.jar** for simplicity.
 
-## Done
+## Check
+
+Please download MyProblem.kt from this repository to the same directory as your **LGP.jar**. Then run this command
+
+```
+kotlinc -cp LGP.jar -no-jdk -no-stdlib MyProblem.kt
+```
+
+Then run this command
+
+```
+kotlin -cp LGP.jar:. MyProblemKt
+```
+
+If the items are installed correctly, you should see the following output
+
+```
+My Problem
+Description(description=A simple example problem definition)
+```
 
 Now with both Kotlin and the LGP API installed, we are ready to work with LGP.
