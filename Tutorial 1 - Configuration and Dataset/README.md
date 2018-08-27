@@ -6,45 +6,49 @@
 
 This tutorial is based on the [tutorial](https://github.com/JedS6391/LGP-Tutorial/tree/develop/src/main/kotlin/lgp/tutorial/linearRegression) made by Jed Simson. Using the program from the tutorial, we can perform LGP without any programming.
 
-Please setup by building the JAR file:
+Please setup by building the JAR file.
 
+First we clone the repository:
 ```
-# Clone this repository
 git clone https://github.com/JedS6391/LGP-Tutorial.git
+```
 
-# Enter the repository directory
+Then we enter the repository directory:
+```
 cd LGP-Tutorial
+```
 
-# Compile the JAR using the gradle wrapper. This command will take a long time
-# the first time it is run as it gathers dependencies.
+Then we compile the JAR using the gradle wrapper. This command will take a long time the first time it is run as it gathers dependencies:
+```
 ./gradlew buildJar
+```
 
-# Check the JAR was built
+Lastly we check the JAR has been successfully built:
+```
 ls build/libs
 ```
 
-Assuming the steps above are performed, we should be in the directory named "LGP-Tutorial". We will make our own configuration and dataset files, as well as run LGP on them, in this directory.
+Assuming the steps above are performed, we should be in the directory named "LGP-Tutorial". We will make our own configuration and dataset files, and proceed to run LGP on them, in this directory.
 
 ## configuration.json
 
-The configuration determines the environment in which your LGP runs. To better understand how LGP works, please refer to [this page](http://lgp-tutorial.jedsimson.co.nz/lgp/lgp.html) by Jed Simson.
+The configuration determines the environment in which your LGP runs. The tutorial is self-contained, however, if you'd like to better understand how LGP works, please refer to [this page](http://lgp-tutorial.jedsimson.co.nz/lgp/lgp.html) by Jed Simson and the book [A Field Guide to Genetic Programming](http://www.gp-field-guide.org.uk/).
 
-Here we try to make our own json file for our configuration.
+Here we make our own json file for our configuration. The configuration determines the the environment in which LGP will run, including things like the operators used, the values of constants, the number of features, etc.
 
-Below is a skeleton file.
+Below is a minimum configuration file, taking advantage of the default parameters implemented in the API.
 
 ```
 {
-    "initialMinimumProgramLength": ,
-    "initialMaximumProgramLength": ,
     "operations": [
-        
+        "lgp.lib.operations.Addition",
+	"lgp.lib.operations.Subtraction",
+	"lgp.lib.operations.Multiplication",
+	"lgp.lib.operations.Division",
+	"lgp.lib.operations.Exponent"
     ],
-    "constants": [],
-    "populationSize": ,
-    "generations": ,
-    "numOffspring": ,
-    "numFeatures": 
+    "constants": [0.0, 1.0],
+    "numFeatures": 2
 }
 ```
 
@@ -58,68 +62,32 @@ initialMinimumProgramLength | The minimum length of a program generated during p
 initialMaximumProgramLength | The maximum length of a program generated during population initialisation.
 minimumProgramLength | The lower bound for program length during the evolution process.
 maximumProgramLength | The upper bound for program length during the evolution process.
-operations | A collection of fully-qualified class names specifying the classes of [lgp.core.evolution.instructions.Operation]s to be loaded into an [lgp.core.environment.Environment]. Please refer to the [implementation](https://github.com/JedS6391/LGP/tree/master/src/main/kotlin/lgp/lib/operations) for available operations. In a later tutorial we'll discuss how to make our own operations.
+operations | A collection of fully-qualified class names specifying the classes of [lgp.core.evolution.instructions.Operation]s to be loaded into an [lgp.core.environment.Environment]. Please refer to the [implementation](https://github.com/JedS6391/LGP/tree/master/src/main/kotlin/lgp/lib/operations) for available operations. In a later tutorial we'll discuss how to make our own operations. Arithmetic operations include: Addition, Substraction, Multiplication, Division, Exponent. Bitwise operations include: Not, And, Or. Conditional operations include: IfGreater, IfLessThanOrEqualTo. There is also a Sine operator, i.e. "lgp.lib.operations.Sine".
 constantsRate | The probability with which instructions in an LGP program will contain a constant value.
-constants | Any values to be used as constants in an LGP program.
-numCalculationRegisters | How many additional calculation registers should be provided to an LGP program.
-populationSize | How many individuals should be generated in the initial population.
-numFeatures | The number of features in the data set (i.e. the number of input registers that should be made available).
+constants | Any values to be used as constants in an LGP program, e.g. "\[0.0, 1.0\]".
+numCalculationRegisters | How many registers should be provided to an LGP program for calculation.
+populationSize | How many individuals should the population contain.
+numFeatures | The number of features in the data set (i.e. the number of input registers that should be made available). This MUST match the number of features provided in the dataset.csv file.
 crossoverRate | The frequency with which crossover should occur.
-microMutationRate | The frequency with which micro-mutations should occur.
-macroMutationRate | The frequency with which macro-mutations should occur.
+microMutationRate | The frequency with which micro-mutations should occur, i.e. rate of change below the instruction level.
+macroMutationRate | The frequency with which macro-mutations should occur, i.e. rate of change on the instruction level.
 generations | Number of generations to evolve.
-numOffspring | Number of individuals that should be taken from the population in each generation.
+numOffspring | Number of individuals that should be taken from the population for fitness tournaments in each generation.
 branchInitialisationRate | How often branches should be included in evolved programs.
-stoppingCriterion | Determines the threshold for stopping the evolutionary process. When a solution with a fitness of [stoppingCriterion] is found, the search will stop. By default, we don't stop until the fitness is minimised perfectly.
-numberOfRuns | Provides the ability to pass in the number of runs as a configuration parameter instead of a hard-coded value in the problem definition. The parameter is not used by default anywhere in the system, but consumers can choose to use it.
-
-Below is a sample file that we'll use for this tutorial.
-
-```
-{
-    "initialMinimumProgramLength": 20,
-    "initialMaximumProgramLength": 40,
-    "operations": [
-        "lgp.lib.operations.Addition",
-	"lgp.lib.operations.Subtraction",
-	"lgp.lib.operations.Multiplication",
-	"lgp.lib.operations.IfGreater",
-	"lgp.lib.operations.IfLessThanOrEqualTo"
-    ],
-    "constants": [0.0, 1.0],
-    "populationSize": 500,
-    "generations": 1000,
-    "numOffspring": 10,
-    "numFeatures": 2,
-    "branchInitialisationRate": 0.1
-}
-```
+stoppingCriterion | Determines the threshold for stopping the evolutionary process. When a solution with a fitness of \[stoppingCriterion\] is found, the search will stop. By default, we don't stop until the fitness is minimised perfectly, reaching 0.
+numberOfRuns | Provides the ability to pass in the number of runs as a configuration parameter instead of a hard-coded value in the problem definition. The parameter is not used by default anywhere in the system, but consumers can choose to use it. As LGP has some randomness in each individual run, multiple runs can be performed to better determine the effectiveness of the program and the configuration.
 
 Some times these parameters require quite a bit tweaking for the program to get a good result, please adjust these parameters in the context of your dataset.
 
-So we save our configuration file as "configuration1.json". If we want another configuration set, we can make another configuration file (e.g. "configuration2.json"), and we'll decide which to use in our command line argument.
+So we save our configuration file as "configuration1.json", which is also present in this repository. If we want another configuration set, we can make another configuration file (e.g. "configuration2.json"), and we'll decide which to use in our command line argument.
 
 ## dataset.csv
 
 The dataset is the data that you'd like to train your LGP with. Each sample in the dataset contains one or more features and a label.
 
-Suppose we have some data representing the non-linear function that y equals x_0 to the power of x_1. Please note, the number of features (x_0 and x_1) conforms with "numFeatures" (2) in the configuration.
+Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}][math1.jpg] Please note, the number of features (x_0 and x_1) conforms with "numFeatures" (2) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
 
-Please note, the program we use treat the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
-
-x_0 | x_1 | y
---- | --- | ---
-1.0 | 1.0 | 1.0
-1.0 | 2.0 | 1.0
-1.0 | 3.0 | 1.0
-2.0 | 1.0 | 2.0
-2.0 | 2.0 | 4.0
-2.0 | 3.0 | 8.0
-3.0 | 1.0 | 3.0
-3.0 | 2.0 | 9.0
-3.0 | 3.0 | 27.0
-
-we can store these data points in a CSV file.
+We store the data points in a CSV file.
 
 ```
 x_0,x_1,y
@@ -150,48 +118,64 @@ So we run the program on the files we just created.
 kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main configuration1.json dataset1.csv
 ```
 
-Now we have tested our own configuration and dataset, I got these results:
+After running our own configuration and dataset a few times, we may get a perfect result, indicated by "bestFitness = 0.0":
 Please note that due to the nature of LGP, the result is likely to differ each time.
 
 ```
 Results:
-Run 1 (best fitness = 18.88888888888889)
-r[4] = r[5] + 1.0
-if (1.0 > r[2])
-if (0.0 > r[6])
-if (1.0 < f1)
-r[4] = 0.0 * f0
-r[11] = f0 * f1
-r[0] = r[4] * r[11]
+Results:
+Run 1 (best fitness = 0.0)
+r[6] = r[11] + f1
+r[8] = 0.0 ^ r[6]
+r[6] = r[4] * 1.0
+r[8] = r[8] * r[10]
+r[3] = 0.0 * r[8]
+r[9] = r[6] + r[3]
+r[4] = r[9] ^ 0.0
+r[9] = f1 / r[4]
+r[0] = f0 ^ r[9]
 
 
 Stats (last generation only):
 
-generation = 999
-bestFitness = 18.88888888888889
-meanFitness = 95.58888888888902
-standardDeviationFitness = 34.531889359200235
-meanProgramLength = 55.712
-meanEffectiveProgramLength = 5.446
-
-0 of 9 test cases passed.
-        Expected: 1.0, Actual: 2.0
-  	Expected: 1.0, Actual: 4.0
-  	Expected: 1.0, Actual: 6.0
-	Expected: 2.0, Actual: 4.0
-  	Expected: 4.0, Actual: 8.0
-  	Expected: 8.0, Actual: 12.0
-  	Expected: 3.0, Actual: 6.0
-  	Expected: 9.0, Actual: 12.0
-  	Expected: 27.0, Actual: 18.0
+generation = 32
+bestFitness = 0.0
+meanFitness = 1.5738795267485742E36
+standardDeviationFitness = 1.5422374250138333E37
+meanProgramLength = 27.62
+meanEffectiveProgramLength = 4.61
 ```
 
-Hmm, maybe not the best we can expect, but we haven't adjusted our hyperparameters for the data yet. We'll discuss how to work with the hyperparameters to make LGP work more efficiently in a later tutorial.
+The simplicity of the function makes getting a perfect result relatively easy, while more complicated functions may require some adjustments to the evolutionary algorithm and the hyperparameters, for LGP to achieve good performance. We'll discuss how to work with those to make LGP work more efficiently in a later tutorial.
 
-Two files are generated by the program, "linear_regression_experiment.c" and "result.csv".
+Three files are generated by the program, "linear_regression_experiment.c", "result.csv" and "testcases.txt".
 
 "linear_regression_experiment.c" is the best solution found by LGP, now as a C program, which takes the feature(s) as command line arguments, and will print its prediction of the label for you.
 
 "results.csv" is the statistics collected in the running process, we can analyse it to get some ideas on how to tweak the hyperparameters and change our program to make it perform better. We'll discuss more about that in a later tutorial.
 
-For now, we have successfully run LGP using our own configuration and dataset without doing any programming.
+"testcases.txt" shows how the solution performs on the test cases.
+
+## Try the generated C program
+
+For now, we have successfully run LGP using our own configuration and dataset without doing any programming. Let's check out the C program generated by it.
+
+First we compile it (we need the -lm to link to the math.h library):
+
+```
+gcc -o linear_regression_experiment linear_regression_experiment.c -lm
+```
+
+Then we test it on some feature values never used in the training process:
+
+```
+./linear_regression_experiment 4 5
+```
+
+The result is:
+
+```
+1024.000000
+```
+
+Which is correct as 4 to the power of 5 is 1024. We've got ourselves a C program for the function.
