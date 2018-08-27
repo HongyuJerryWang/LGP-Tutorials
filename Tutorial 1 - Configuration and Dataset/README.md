@@ -85,7 +85,7 @@ So we save our configuration file as "configuration1.json", which is also presen
 
 The dataset is the data that you'd like to train your LGP with. Each sample in the dataset contains one or more features and a label.
 
-Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}](math1.jpg) Please note, the number of features (x_0 and x_1) conforms with "numFeatures" (2) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
+Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}, i.e. y equals x_0 to the power of x_1](math1.jpg "y equals x_0 to the power of x_1") Please note, the number of features (x_0 and x_1) conforms with "numFeatures" (2) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
 
 We store the data points in a CSV file.
 
