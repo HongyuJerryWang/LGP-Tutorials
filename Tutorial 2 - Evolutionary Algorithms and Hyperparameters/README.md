@@ -6,9 +6,9 @@
 
 We will continue to use the setup we created in Tutorial 1, and this tutorial will be performed in the LGP-Tutorial directory, too.
 
-This tutorial does not include programming. We'll perform LGP on a synthetic symbolic regression benchmark, the Pagie-1 (![f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)][math1.jpg "(f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)"], defined by Pagie & Hogeweg in 1997). Which looks like
+This tutorial does not include programming. We'll perform LGP on a synthetic symbolic regression benchmark, the Pagie-1 (![f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)](math1.jpg "(f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)"), defined by Pagie & Hogeweg in 1997). Which looks like
 
-![Pagie-1][Pagie-1.png "Pagie-1.png"]
+![Pagie-1](Pagie-1.png "Pagie-1.png")
 
 Please download the Pagie-1.csv file from this repository. This original dataset can be found [here](https://github.com/PonyGE/PonyGE2/blob/master/datasets/Paige1/Train.txt).
 
@@ -44,7 +44,7 @@ If we inspect the expected and the actual values in testcase.csv, chances are th
 
 Hmm, we can quickly spot a problem, the best fitness has never improved.
 
-![Pagie-1-1][Pagie-1-1.jpg "Best Fitness Line Graph for Pagie-1-1.json"]
+![Pagie-1-1](Pagie-1-1.jpg "Best Fitness Line Graph for Pagie-1-1.json")
 
 The fact is, the default generation number, 50, is too small for most of the problems, let's make the generation number 1000 in our json file and name it Pagie-1-2.json.
 
@@ -60,7 +60,7 @@ kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main Pagie
 
 After a few tries and inspecting result.csv and testcases.txt, we find that the performance is equally bad, and the best fitness stops improving after the first few generations or has never improved.
 
-![Pagie-1-2][Pagie-1-2.jpg "Best Fitness Line Graph for Pagie-1-2.json"]
+![Pagie-1-2](Pagie-1-2.jpg "Best Fitness Line Graph for Pagie-1-2.json")
 
 Maybe it's the operations we have, as the default set of addition, subtraction and multiplication is quite limited. Let's add division to our operations and see if anything improves.
 
@@ -79,7 +79,7 @@ kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main Pagie
 
 After a few tries, there are some better results. I get a best fitness of 0.23. Looks like division is one of the things we need.
 
-![Pagie-1-3][Pagie-1-3.jpg "Best Fitness Line Graph for Pagie-1-3.json"]
+![Pagie-1-3](Pagie-1-3.jpg "Best Fitness Line Graph for Pagie-1-3.json")
 
 We see that the fitness is improving, which is good, but once in a few hundred generations, which is a bit slow. We can give the program more registers, more variant program length, a bigger population and a greater number of offspring. So the program can search deeper and wider into the search space.
 
@@ -101,7 +101,7 @@ kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main Pagie
 
 After a few tries, we find out the best fitness might differ quite a bit form run to run, but is in general better, as I get a best fitness of 0.15.
 
-![Pagie-1-4][Pagie-1-4.jpg "Best Fitness Line Graph for Pagie-1-4.json"]
+![Pagie-1-4](Pagie-1-4.jpg "Best Fitness Line Graph for Pagie-1-4.json")
 
 It should be noted that searching too deep or wide into the search space may take a painfully long time with little gain in performance, so please increase these hyperparameters bit by bit and observe the performance. Also, the greater the numCalculationRegisters, the bigger the search space, and if the search space is too big, the program might actually do worse, so please treat this hyperparameter with caution.
 
@@ -119,7 +119,7 @@ kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main Pagie
 
 After a few runs, seems it is not significantly better or worse, and I get a best fitness of 0.16.
 
-![Pagie-1-5][Pagie-1-5.jpg "Best Fitness Line Graph for Pagie-1-5.json"]
+![Pagie-1-5](Pagie-1-5.jpg "Best Fitness Line Graph for Pagie-1-5.json")
 
 In my experiments, making the mutations less often and drastic seemed to yield similar results.
 
@@ -133,7 +133,7 @@ kotlin -cp build/libs/LGP-Tutorial.jar: lgp.tutorial.linearRegression.Main Pagie
 
 After a few runs, we can get more stable performance and I get a best fitness of 0.13.
 
-![Pagie-1-5 Island Migration][Pagie-1-5-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-5.json with Island Migration"]
+![Pagie-1-5 Island Migration](Pagie-1-5-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-5.json with Island Migration")
 
 ## Summary
 
