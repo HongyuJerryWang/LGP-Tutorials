@@ -10,8 +10,12 @@
         "lgp.lib.operations.Division"
     ],
     "constants": [0.0, 1.0],
+    "numCalculationRegisters": 15,
     "populationSize": 1000,
     "generations": 1000,
-    "numOffspring": 25,
+    "numOffspring": 50,
+    "crossoverRate": 0.8,
+    "microMutationRate": 0.8,
+    "macroMutationRate": 0.8,
     "numFeatures": 2
 }

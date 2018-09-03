@@ -13,6 +13,6 @@
     "numCalculationRegisters": 15,
     "populationSize": 1000,
     "generations": 1000,
-    "numOffspring": 25,
+    "numOffspring": 50,
     "numFeatures": 2
 }
