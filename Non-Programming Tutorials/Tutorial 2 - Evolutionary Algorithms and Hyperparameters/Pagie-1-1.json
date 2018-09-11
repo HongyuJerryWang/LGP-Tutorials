@@ -1,0 +1,9 @@
+{
+    "operations": [
+        "lgp.lib.operations.Addition",
+        "lgp.lib.operations.Subtraction",
+        "lgp.lib.operations.Multiplication"
+    ],
+    "constants": [0.0, 1.0],
+    "numFeatures": 2
+}
