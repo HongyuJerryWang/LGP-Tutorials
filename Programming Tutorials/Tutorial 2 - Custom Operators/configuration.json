@@ -1,0 +1,14 @@
+{
+    "operations": [
+        "lgp.lib.operations.Addition",
+        "lgp.lib.operations.Subtraction",
+        "lgp.lib.operations.Multiplication",
+        "lgp.lib.operations.Division",
+        "Median"
+    ],
+    "constants": [0.0, 1.0],
+    "populationSize": 1000,
+    "generations": 1000,
+    "numOffspring": 50,
+    "numFeatures": 4
+}

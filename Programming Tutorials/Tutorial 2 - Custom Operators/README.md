@@ -91,7 +91,7 @@ private enum class MacroMutationType {
 A macro mutation on a program is either inserting a new instruction or deleting an existing instruction.
 
 ```
-val mutationType = if (random.nextDouble() `<` this.insertionRate) {
+val mutationType = if (random.nextDouble() < this.insertionRate) {
     MacroMutationType.Insertion
 } else {
     MacroMutationType.Deletion
@@ -107,7 +107,7 @@ val mutationPoint = random.randInt(0, programLength - 1)
 We randomly select an instruction at a position i (mutation point).
 
 ```
-if (programLength `<` maximumProgramLength &&
+if (programLength < maximumProgramLength &&
         (mutationType == MacroMutationType.Insertion || programLength == minimumProgramLength)) {
     val instruction = this.instructionGenerator.generateInstruction()
 
@@ -204,17 +204,17 @@ MicroMutationType.Operator -> {
     if (instruction.operands.size > operation.arity.number) {
         // If we're going to a reduced arity instruction, we can just truncate the operands
         instruction.operands = instruction.operands.slice(0 until operation.arity.number)
-    } else if (instruction.operands.size `<` operation.arity.number) {
+    } else if (instruction.operands.size < operation.arity.number) {
         // Otherwise, if we're increasing the arity, just add random input
         // and calculation registers until the arity is met.
-        while (instruction.operands.size `<` operation.arity.number) {
-            val register = if (random.nextDouble() `<` constantsRate) {
+        while (instruction.operands.size < operation.arity.number) {
+            val register = if (random.nextDouble() < constantsRate) {
             registerGenerator.next(RegisterType.Constant).first()
             } else {
                 registerGenerator.next(
                     a = RegisterType.Input,
                     b = RegisterType.Calculation,
-                    predicate = { random.nextDouble() `<` 0.5 }
+                    predicate = { random.nextDouble() < 0.5 }
                 ).first()
             }
 
