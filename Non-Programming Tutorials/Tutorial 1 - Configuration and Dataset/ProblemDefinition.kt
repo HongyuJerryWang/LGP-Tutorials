@@ -18,11 +18,8 @@ import java.io.FileReader
  * Defines what a solution for this problem looks like.
  */
 class LinearRegressionExperimentSolution(
-    // The problems description
     override val problem: String,
-    // The results as given by a Trainer instance
     val result: TrainingResult<Double>,
-    // The training dataset
     val dataset: Dataset<Double>,
     val inputVectorization: List<List<Pair<Int, String?>>>,
     val outputVectorization: List<List<Pair<Int, String?>>>
@@ -30,9 +27,6 @@ class LinearRegressionExperimentSolution(
 
 /**
  * Defines the problem.
- *
- * @param configurationFilename The name of a JSON file where configuration information can be found.
- * @param datasetFilename The name of a CSV file where a data set for the problem can be found.
  */
 class LinearRegressionExperiment(
     private val configurationFilename: String,
@@ -159,7 +153,7 @@ class LinearRegressionExperiment(
         // Indices of the feature variables. These are dynamic so that if another dataset/configuraiton
         // is used then the correct indices will be used.
         val featureIndices = 0 until inputVectorization.count()
-        // Index of the target variable. Again this is dynamic for the reason above.
+        // Indices of the target variables. Again this is dynamic for the reason above.
         val targetIndices = inputVectorization.count() until (inputVectorization.count() + outputVectorization.count())
 
         // Load the data set
@@ -174,14 +168,7 @@ class LinearRegressionExperiment(
         // Print details about the data set and configuration before beginning the evolutionary process.
         println("\nDataset details:")
         println("numFeatures = ${dataset.numFeatures()}, numSamples = ${dataset.numSamples()}")
-
-        // println("inputs:")
-        // dataset.inputs.map { sample -> println(sample) }
-
-        // println("outputs:")
-        // println(dataset.outputs)
         println()
-
         println(this.configuration)
 
         // Train using the built-in sequential trainer.
