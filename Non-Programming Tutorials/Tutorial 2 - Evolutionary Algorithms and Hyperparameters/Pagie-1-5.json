@@ -17,5 +17,6 @@
     "crossoverRate": 0.8,
     "microMutationRate": 0.8,
     "macroMutationRate": 0.8,
-    "numFeatures": 2
+    "featuresBeingCategorical": [false, false],
+    "outputsBeingCategorical": [false]
 }
