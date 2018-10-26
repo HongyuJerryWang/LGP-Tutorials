@@ -79,24 +79,30 @@ With Java installed, build the API with
 
 This might take a while for it to gather all the dependencies required.
 
-In the *LGP* directory, you should now see a *build* directory, please go inside it, then go inside the *libs* directory, please look for the JAR file for the core API, e.g. **LGP-core-1.2.jar**. Move the JAR file to the directory you'd like to work in, and rename the file **LGP.jar** for simplicity.
+In the *LGP* directory, you should now see a *build* directory, please go inside it, then go inside the *libs* directory, please look for the JAR file for the core API, e.g. **LGP-core-2.0.jar**. Move the JAR file to the directory you'd like to work in (here we'll call this directory **LGP-Tutorials**), and rename the file **LGP.jar** for simplicity.
 
 ### Downloading the API
 
-Alternatively you can download the newest version from the [releases](https://github.com/JedS6391/LGP/releases) page. For example, as of when this tutorial is written, the top version on the page is 1.2.1, so please download the **LGP-core-1.2.jar** file in the *Assets* of version 1.2.1. Move the JAR file to the directory you'd like to work in, and rename the file **LGP.jar** for simplicity.
+Alternatively you can download the newest version from the [releases](https://github.com/JedS6391/LGP/releases) page. For example, as of when this tutorial is written, the top version on the page is 2.0, so please download the **LGP-core-2.0.jar** file in the *Assets* of version 2.0. Move the JAR file to the directory you'd like to work in (here we'll call this directory **LGP-Tutorials**), and rename the file **LGP.jar** for simplicity.
+
+## Additional libraries
+
+Please download **argparser.jar** and **xenocom.jar** from the root of this repository into the directory **LGP-Tutorials**. Our later tutorials will make use of these libraries.
+
+Please note, [argparser](https://github.com/xenomachina/kotlin-argparser) and [xenocom](https://github.com/xenomachina/xenocom) are API's on GitHub. They were used to build the jar files provided here. You can clone them and build the jar files yourself.
 
 ## Check
 
-Please download MyProblem.kt from this repository to the same directory as your **LGP.jar**. Then run this command
+Please download MyProblem.kt from this repository to a sub-directory of **LGP-Tutorials**, e.g. **Tutorial0Setup**. Then run this command in **Tutorial0Setup**
 
 ```
-kotlinc -cp LGP.jar -no-jdk -no-stdlib MyProblem.kt
+kotlinc -cp ../LGP.jar -no-jdk -no-stdlib MyProblem.kt
 ```
 
 Then run this command
 
 ```
-kotlin -cp LGP.jar:. MyProblemKt
+kotlin -cp ../LGP.jar:. MyProblemKt
 ```
 
 If the items are installed correctly, you should see the following output
