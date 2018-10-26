@@ -7,5 +7,6 @@
         "lgp.lib.operations.Exponent"
     ],
     "constants": [0.0, 1.0],
-    "numFeatures": 2
+    "featuresBeingCategorical": ["false", "false"],
+    "outputsBeingCategorical": ["false"]
 }
