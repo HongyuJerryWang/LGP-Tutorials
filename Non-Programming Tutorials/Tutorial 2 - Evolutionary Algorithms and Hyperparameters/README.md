@@ -4,7 +4,7 @@
 
 ## Setup
 
-Please download **Pagie-1-1.json**, **Pagie-1-2.json**, **Pagie-1-3.json**, **Pagie-1-4.json**, **Pagie-1-5.json** and **Pagie-1.csv** from this repository, and move a copy of **Main.kt** and **ProblemDefinition.kt** from the previous tutorial, into a sub-directory of **LGP-Tutorials**, e.g. **NonProgrammingTutorial2EvolutionaryAlgorithmAndHyperparameters**.
+Please download **Pagie-1-1.json**, **Pagie-1-2.json**, **Pagie-1-3.json**, **Pagie-1-4.json**, **Pagie-1-5.json**, **Pagie-1-6.json** and **Pagie-1.csv** from this repository, and move a copy of **Main.kt** and **ProblemDefinition.kt** from the previous tutorial, into a sub-directory of **LGP-Tutorials**, e.g. **NonProgrammingTutorial2EvolutionaryAlgorithmAndHyperparameters**.
 
 In **NonProgrammingTutorial2EvolutionaryAlgorithmAndHyperparameters**, compile with
 
