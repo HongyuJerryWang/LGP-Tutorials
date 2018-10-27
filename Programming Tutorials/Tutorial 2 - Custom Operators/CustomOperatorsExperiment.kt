@@ -6,7 +6,9 @@ import lgp.core.environment.operations.DefaultOperationLoader
 import lgp.core.evolution.*
 import lgp.core.evolution.fitness.FitnessFunctions
 import lgp.core.evolution.fitness.SingleOutputFitnessContext
-import lgp.core.evolution.population.*
+import lgp.core.evolution.model.*
+import lgp.core.evolution.operators.*
+import lgp.core.evolution.training.*
 import lgp.lib.BaseInstructionGenerator
 import lgp.lib.BaseProgramGenerator
 import java.io.BufferedReader
@@ -16,19 +18,15 @@ import java.io.FileReader
  * Defines what a solution for this problem looks like.
  */
 class CustomOperatorsExperimentSolution(
-    // The problems description
     override val problem: String,
-    // The results as given by a Trainer instance
     val result: TrainingResult<Double>,
-    // The training dataset
-    val dataset: Dataset<Double>
+    val dataset: Dataset<Double>,
+    val inputVectorization: List<List<Pair<Int, String?>>>,
+    val outputVectorization: List<List<Pair<Int, String?>>>
 ) : Solution<Double>
 
 /**
  * Defines the problem.
- *
- * @param configurationFilename The name of a JSON file where configuration information can be found.
- * @param datasetFilename The name of a CSV file where a data set for the problem can be found.
  */
 class CustomOperatorsExperiment(
     private val configurationFilename: String,
@@ -40,9 +38,9 @@ class CustomOperatorsExperiment(
 ) : Problem<Double>() {
 
     // 1. Give the problem a name and simple description.
-    override val name = "Time Series Experiment"
+    override val name = "Custom Operators Experiment"
     override val description = Description(
-        "An example time series problem definition for the LGP tutorial."
+        "An example custom operators experiment for the LGP tutorial."
     )
 
     // 2. Define the necessary dependencies to build a problem.
@@ -50,6 +48,9 @@ class CustomOperatorsExperiment(
     override val configLoader = JsonConfigurationLoader(filename = this.configurationFilename)
     // To prevent reloading configuration in this module.
     private val configuration = this.configLoader.load()
+    private val vectorization = CsvDatasetLoader.vectorize(this.datasetFilename, this.configuration.featuresBeingCategorical.map { value -> value.toBoolean() }, this.configuration.outputsBeingCategorical.map { value -> value.toBoolean() })
+    private val inputVectorization = vectorization.first
+    private val outputVectorization = vectorization.second
     // Load constants from the configuration as double values.
     override val constantLoader = DoubleConstantLoader(constants = this.configuration.constants)
     // Load operations from the configuration (operations are resolved using their class name).
@@ -69,7 +70,7 @@ class CustomOperatorsExperiment(
                 BaseProgramGenerator(
                     environment,
                     sentinelTrueValue = 1.0, // Determines the value that represents a boolean "true".
-                    outputRegisterIndex = 0  // Which register should be read for a programs output.
+                    outputRegisterIndices = outputVectorization.flatten().map { pair -> pair.first }  // Which registers should be read for a programs output.
                 )
             },
             // Perform selection using the built-in tournament selection.
@@ -85,7 +86,7 @@ class CustomOperatorsExperiment(
                     maximumSegmentLengthDifference = 3
                 )
             },
-            // Use the custom macro-mutation operator.
+            // Use the built-in macro-mutation operator.
             CoreModuleType.MacroMutationOperator to { environment ->
                 CustomMacroMutationOperator(
                     environment,
@@ -93,7 +94,7 @@ class CustomOperatorsExperiment(
                     deletionRate = 0.33
                 )
             },
-            // Use the custom micro-mutation operator.
+            // Use the built-in micro-mutation operator.
             CoreModuleType.MicroMutationOperator to { environment ->
                 CustomMicroMutationOperator(
                     environment,
@@ -118,6 +119,7 @@ class CustomOperatorsExperiment(
             this.operationLoader,
             this.defaultValueProvider,
             this.fitnessFunction,
+            this.inputVectorization,
             // Collect results and output them to the file "result.csv".
             ResultAggregators.BufferedResultAggregator(
                 ResultOutputProviders.CsvResultOutputProvider(
@@ -150,28 +152,15 @@ class CustomOperatorsExperiment(
     override fun solve(): CustomOperatorsExperimentSolution {
         // Indices of the feature variables. These are dynamic so that if another dataset/configuraiton
         // is used then the correct indices will be used.
-        val featureIndices = 0 until this.configuration.numFeatures
-        // Index of the target variable. Again this is dynamic for the reason above.
-        val targetIndex = featureIndices.last + 1
+        val featureIndices = 0 until inputVectorization.count()
+        // Indices of the target variables. Again this is dynamic for the reason above.
+        val targetIndices = inputVectorization.count() until (inputVectorization.count() + outputVectorization.count())
 
         // Load the data set
         val csvLoader = CsvDatasetLoader(
             reader = BufferedReader(FileReader(this.datasetFilename)),
-            featureParseFunction = { header: Header, row: Row ->
-                // Combine the feature names and feature values into a Feature instance.
-                val features = row.zip(header)
-                        .slice(featureIndices)
-                        .map { (value, name) ->
-                            Feature(name, value.toDouble())
-                        }
-
-                // Create a new sample with these features.
-                Sample(features)
-            },
-            targetParseFunction = { _: Header, row: Row ->
-                // Take the target variable value and cast it to double.
-                row[targetIndex].toDouble()
-            }
+            featureParseFunction = ParsingFunctions.vectorizedDoubleFeatureParsingFunction(featureIndices, inputVectorization),
+            targetParseFunction = ParsingFunctions.vectorizedDoubleTargetParsingFunction(targetIndices, outputVectorization)
         )
 
         val dataset = csvLoader.load()
@@ -179,23 +168,25 @@ class CustomOperatorsExperiment(
         // Print details about the data set and configuration before beginning the evolutionary process.
         println("\nDataset details:")
         println("numFeatures = ${dataset.numFeatures()}, numSamples = ${dataset.numSamples()}")
-
         println()
-
         println(this.configuration)
 
         // Train using the built-in sequential trainer.
-        val trainer = Trainers.SequentialTrainer(
+        val trainer = SequentialTrainer(
             this.environment,
             this.model,
             runs = this.configuration.numberOfRuns
         )
 
-        // Return a solution to the problem.
+        // Return a solution the problem.
         return CustomOperatorsExperimentSolution(
             problem = this.name,
             result = trainer.train(dataset),
-            dataset = dataset
+            dataset = dataset,
+            inputVectorization = this.inputVectorization,
+            outputVectorization = this.outputVectorization
         )
     }
 }
+
+

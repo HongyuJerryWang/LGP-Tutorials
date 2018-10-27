@@ -7,8 +7,12 @@
         "Median"
     ],
     "constants": [0.0, 1.0],
+    "numCalculationRegisters": 15,
+    "initialMaximumProgramLength": 50,
+    "maximumProgramLength": 500,
     "populationSize": 1000,
     "generations": 1000,
-    "numOffspring": 50,
-    "numFeatures": 4
+    "numOffspring": 100,
+    "featuresBeingCategorical": [false, false, false, false],
+    "outputsBeingCategorical": [true]
 }

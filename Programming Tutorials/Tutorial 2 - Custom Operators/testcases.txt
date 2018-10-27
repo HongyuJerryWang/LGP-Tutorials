@@ -1,151 +1,151 @@
-The average difference is 0.0.
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 1.0, Actual: 1.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
-	Expected: 0.0, Actual: 0.0
+The average difference is 0.7580060529467696.
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.5, 0.16666666666666666, 0.16666666666666666]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.971301247771836, 0.009090909090909092, 0.009090909090909092]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.35639534883720936, 0.22499999999999998, 0.22499999999999998]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.6432900432900432, 0.1142857142857143, 0.1142857142857143]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.7782268578878749, 0.06923076923076922, 0.06923076923076922]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [1.0, 0.0, 0.0], Actual: [0.8925925925925925, 0.03333333333333333, 0.03333333333333333]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 1.0, 0.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]
+	Expected: [0.0, 0.0, 1.0], Actual: [0.0, 0.5, 0.5]

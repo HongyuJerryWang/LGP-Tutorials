@@ -1,10 +1,10 @@
-import lgp.core.environment.CoreModuleType
-import lgp.core.environment.Environment
-import lgp.core.evolution.instructions.*
-import lgp.core.evolution.population.*
-import lgp.core.evolution.registers.Arguments
-import lgp.core.evolution.registers.RandomRegisterGenerator
-import lgp.core.evolution.registers.RegisterType
+import lgp.core.environment.*
+import lgp.core.evolution.operators.*
+import lgp.core.program.*
+import lgp.core.program.instructions.*
+import lgp.core.program.registers.Arguments
+import lgp.core.program.registers.RandomRegisterGenerator
+import lgp.core.program.registers.RegisterType
 import lgp.core.modules.Module
 import lgp.core.modules.ModuleInformation
 
