@@ -1,5 +1,6 @@
 import lgp.core.evolution.fitness.FitnessFunction
 import lgp.core.evolution.fitness.FitnessCase
+import lgp.core.evolution.model.EvolutionResult
 import lgp.core.environment.dataset.Dataset
 
 import lgp.lib.BaseProgram
@@ -64,17 +65,22 @@ class Main {
 
         private val verboseMSE = object : FitnessFunction<Double>() {
 
-            override fun fitness(outputs: List<Double>, cases: List<FitnessCase<Double>>): Double {
+            override fun fitness(outputs: List<List<Double>>, cases: List<FitnessCase<Double>>): Double {
                 val difference = cases.zip(outputs).map { (case, actual) ->
                     val expected = case.target
-                    Math.abs(actual - expected)
+                    actual.zip(expected).map { (singleActual, singleExpected) -> Math.abs(singleActual - singleExpected) }.sum()
                 }.average()
+
                 File("testcases.txt").bufferedWriter().use { out ->
+
                     out.write("The average difference is ${difference}.\n")
+
                     cases.zip(outputs).map { (expected, actual) ->
                         out.write("\tExpected: ${expected.target}, Actual: $actual\n")
                     }
+
                 }
+
                 return 0.0
             }
         }
@@ -120,7 +126,7 @@ class Main {
 
             println("Results:")
 
-            solution.result.evaluations.forEachIndexed { run, res ->
+            solution.result.evaluations.forEachIndexed { run: Int, res: EvolutionResult<Double> ->
                 println("Run ${run + 1} (best fitness = ${res.best.fitness})")
                 println(simplifier.simplify(res.best as BaseProgram<Double>))
 
@@ -132,7 +138,7 @@ class Main {
                 println("")
             }
 
-            val bestPrograms = solution.result.evaluations.map { res -> res.best as BaseProgram<Double> }
+            val bestPrograms = solution.result.evaluations.map { res: EvolutionResult<Double> -> res.best as BaseProgram<Double> }
             val best = bestPrograms.minBy(BaseProgram<Double>::fitness)
             this.printPassedTestCases(best as BaseProgram<Double>, dataset)
             File("time_series_experiment.c").bufferedWriter().use { out ->
@@ -160,7 +166,7 @@ class Main {
                 program.execute()
 
                 // ... and gather a result from the programs specified output register.
-                program.registers[program.outputRegisterIndex]
+                program.outputRegisterIndices.map { index: Int -> program.registers[index] }
             }
 
             // Execute fitness function and discard the result

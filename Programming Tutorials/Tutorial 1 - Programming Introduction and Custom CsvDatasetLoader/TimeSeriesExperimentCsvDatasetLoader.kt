@@ -66,13 +66,13 @@ class TimeSeriesExperimentCsvDatasetLoader constructor(
         // Parse features and target values individually.
         var features: MutableList<Sample<Double>> = ArrayList()
 
-        var targets: MutableList<Double> = ArrayList()
+        var targets: MutableList<List<Double>> = ArrayList()
 
         for (i in windowSize..(lines.size - 1)) {
             val temp = MutableList(windowSize, { j -> Feature(name = "t-" + (windowSize - j), value = normalizedValues.get(i - windowSize + j)) })
             temp.add(Feature(name = "time", value = normalizedTimes.get(i)))
             features.add(Sample(temp))
-            targets.add(normalizedValues.get(i))
+            targets.add(listOf(normalizedValues.get(i)))
         }
 
         return Dataset(features, targets)

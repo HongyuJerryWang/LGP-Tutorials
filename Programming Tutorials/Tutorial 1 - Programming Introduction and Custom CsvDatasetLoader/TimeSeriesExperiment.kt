@@ -6,7 +6,9 @@ import lgp.core.environment.operations.DefaultOperationLoader
 import lgp.core.evolution.*
 import lgp.core.evolution.fitness.FitnessFunctions
 import lgp.core.evolution.fitness.SingleOutputFitnessContext
-import lgp.core.evolution.population.*
+import lgp.core.evolution.model.*
+import lgp.core.evolution.operators.*
+import lgp.core.evolution.training.*
 import lgp.lib.BaseInstructionGenerator
 import lgp.lib.BaseProgramGenerator
 import java.io.BufferedReader
@@ -70,7 +72,7 @@ class TimeSeriesExperiment(
                 BaseProgramGenerator(
                     environment,
                     sentinelTrueValue = 1.0, // Determines the value that represents a boolean "true".
-                    outputRegisterIndex = 0  // Which register should be read for a programs output.
+                    outputRegisterIndices = this.configuration.outputsBeingCategorical.mapIndexed { index: Int, _ -> index }  // Which registers should be read for a programs output.
                 )
             },
             // Perform selection using the built-in tournament selection.
@@ -119,6 +121,7 @@ class TimeSeriesExperiment(
             this.operationLoader,
             this.defaultValueProvider,
             this.fitnessFunction,
+            this.configuration.featuresBeingCategorical.mapIndexed { index: Int, _ -> listOf(Pair(index, null)) },
             // Collect results and output them to the file "result.csv".
             ResultAggregators.BufferedResultAggregator(
                 ResultOutputProviders.CsvResultOutputProvider(
@@ -167,7 +170,7 @@ class TimeSeriesExperiment(
         println(this.configuration)
 
         // Train using the built-in sequential trainer.
-        val trainer = Trainers.SequentialTrainer(
+        val trainer = SequentialTrainer(
             this.environment,
             this.model,
             runs = this.configuration.numberOfRuns
