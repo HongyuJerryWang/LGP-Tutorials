@@ -21,16 +21,12 @@ Please note, we need a custom dataset loader because of the specific way in whic
 
 ## Running
 
-Please make sure your are in the directory where your **LGP.jar** is.
+Download **Main.kt**, **TimeSeriesExperiment.kt**, **TimeSeriesExperimentCsvDatasetLoader.kt**, **configuration.json** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial1ProgrammingIntroductionAndCustomCsvDatasetLoader**.
 
-Download the following file from this repository into the directory: **Main.kt**, **TimeSeriesExperiment.kt**, **TimeSeriesExperimentCsvDatasetLoader.kt**, **argparser.jar**, **configuration.json**, **dataset.csv** and **xenocom.jar**.
-
-Please note, [argparser](https://github.com/xenomachina/kotlin-argparser) and [xenocom](https://github.com/xenomachina/xenocom) are API's on GitHub. They were used to build the jar files provided here. You can clone them and build the jar files yourself.
-
-Compile
+In **ProgrammingTutorial1ProgrammingIntroductionAndCustomCsvDatasetLoader**, compile
 
 ```
-kotlinc -cp LGP.jar:argparser.jar:xenocom.jar -no-stdlib *.kt
+kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
 ```
 
 Please note, LGP.jar contains the Kotlin standard library, so *-no-stdlib* is added to avoid warnings.
@@ -41,13 +37,15 @@ Run
 kotlin -cp LGP.jar:argparser.jar:xenocom.jar:. Main configuration.json dataset.csv 3
 ```
 
-The arguments used: the configuration file, the dataset file and the time window size. The number of features stated in the configuration file is 4, which is the 3 previous blood sugar levels plus the given time. Please make sure the number of features is greater than the time window size by 1 when you experiment with different time window sizes.
+The arguments used: the configuration file, the dataset file and the time window size. The number of features stated in the configuration file as featuresBeingCategorical is 4, which is the 3 previous blood sugar levels plus the given time. Please make sure the number of features is greater than the time window size by 1 when you experiment with different time window sizes.
 
 ## Analysis
 
 Let's go through the program files to see how it performs LGP.
 
 ### Main.kt
+
+There are 7 arguments in total, 5 of which are optional as they have default values. The user has to specify the configuration file and the dataset file. The program by default uses a window size of 3, SteadyState as the evolutionary algorithm and, if IslandMigration is used, an island number of 4, a migration interval of 10 generations and a migration size of 10 individuals.
 
 ```
 class Arguments(parser: ArgParser) {
@@ -92,28 +90,33 @@ class Arguments(parser: ArgParser) {
 }
 ```
 
-There are 7 arguments in total, 5 of which are optional as they have default values. The user has to specify the configuration file and the dataset file. The program by default uses a window size of 3, SteadyState as the evolutionary algorithm and, if IslandMigration is used, an island number of 4, a migration interval of 10 generations and a migration size of 10 individuals.
+The testcases of the final solution by LGP are computed and output to the file **testcases.txt**. It should be noted that each output is a list of doubles as the output is a vector. In this case it's a vector of one value, but still need to be treated as a list. How the difference is computed is up to the programmer, here I define the difference between an actual output and the corresponding expected output to be the sum of the differences between their individual values.
 
 ```
 private val verboseMSE = object : FitnessFunction<Double>() {
 
-    override fun fitness(outputs: List<Double>, cases: List<FitnessCase<Double>>): Double {
+    override fun fitness(outputs: List<List<Double>>, cases: List<FitnessCase<Double>>): Double {
         val difference = cases.zip(outputs).map { (case, actual) ->
             val expected = case.target
-            Math.abs(actual - expected)
+            actual.zip(expected).map { (singleActual, singleExpected) -> Math.abs(singleActual - singleExpected) }.sum()
         }.average()
+
         File("testcases.txt").bufferedWriter().use { out ->
+
             out.write("The average difference is ${difference}.\n")
+
             cases.zip(outputs).map { (expected, actual) ->
                 out.write("\tExpected: ${expected.target}, Actual: $actual\n")
             }
+
         }
+
         return 0.0
     }
 }
 ```
 
-The testcases of the final solution by LGP are computed and output to the file **testcases.txt**.
+The arguments are passed to the problem definition, and used to setup and run LGP.
 
 ```
 val problem = TimeSeriesExperiment(
@@ -127,7 +130,7 @@ val problem = TimeSeriesExperiment(
 )
 ```
 
-The arguments are passed to the problem definition, and used to setup and run LGP.
+LGP is run, the solution is returned. The dataset will later be used for the testcases.
 
 ```
 problem.initialiseEnvironment()
@@ -139,12 +142,12 @@ val solution = problem.solve()
 val dataset = solution.dataset
 ```
 
-LGP is run, the solution is returned. The dataset will later be used for the testcases.
+The statistics of each run are printed, e.g. best fitness, mean fitness, fitness standard deviation, etc.
 
 ```
 println("Results:")
 
-solution.result.evaluations.forEachIndexed { run, res ->
+solution.result.evaluations.forEachIndexed { run: Int, res: EvolutionResult<Double> ->
     println("Run ${run + 1} (best fitness = ${res.best.fitness})")
     println(simplifier.simplify(res.best as BaseProgram<Double>))
 
@@ -157,10 +160,10 @@ solution.result.evaluations.forEachIndexed { run, res ->
 }
 ```
 
-The statistics of each run are printed, e.g. best fitness, mean fitness, fitness standard deviation, etc.
+The best solution is selected from all the runs, its testcases recorded, and is translated into a C program.
 
 ```
-val bestPrograms = solution.result.evaluations.map { res -> res.best as BaseProgram<Double> }
+val bestPrograms = solution.result.evaluations.map { res: EvolutionResult<Double> -> res.best as BaseProgram<Double> }
 val best = bestPrograms.minBy(BaseProgram<Double>::fitness)
 this.printPassedTestCases(best as BaseProgram<Double>, dataset)
 File("time_series_experiment.c").bufferedWriter().use { out ->
@@ -168,8 +171,6 @@ File("time_series_experiment.c").bufferedWriter().use { out ->
     out.write(translated)
 }
 ```
-
-The best solution is selected from all the runs, its testcases recorded, and is translated into a C program.
 
 ### TimeSeriesExperiment.kt
 
@@ -180,9 +181,13 @@ The comments of this file are pretty explainatory, as what we need to do can be 
 4. Specify which evolution model should be used to solve the problem.
 5. Describe the steps required to solve the problem using the definition given above.
 
-This time we are mostly using standard components provided by the API, in the next tutorial we'll look into how we can make some custom components for a problem we want to solve.
+This time we are mostly using standard components provided by the API, in the next tutorial we'll look into using some components with extended functionality and making some custom components for a problem we want to solve.
 
 ### TimeSeriesExperimentCsvDatasetLoader.kt
+
+This class is a subclass of DatasetLoader, and the load method returns a Dataset of specifically Double. It takes two arguments:
+1. A reader that will provide the contents of a CSV file
+2. The number of previous values we want to provide to LGP as features
 
 ```
 class TimeSeriesExperimentCsvDatasetLoader constructor(
@@ -191,9 +196,7 @@ class TimeSeriesExperimentCsvDatasetLoader constructor(
 ) : DatasetLoader<Double>
 ```
 
-This class is a subclass of DatasetLoader, and the load method returns a Dataset of specifically Double. It takes two arguments:
-1. A reader that will provide the contents of a CSV file
-2. The number of previous values we want to provide to LGP as features
+All the times are extracted from the CSV file, and then normalized. As the constant values our configuration file specifies are 0.0 and 1.0, and all the registers are initialized to 1.0 in our problem definition file, time values ranging from -10 to over 200 are easily too large for our constant and initialized values to make a difference, so normalizing them to 0.0 to 1.0 should help the performance. However, when we use our C program for prediction, we need to normalize those values as well before inputting them to the program.
 
 ```
 val times: List<Double> = lines.map { line ->
@@ -217,7 +220,7 @@ val values: List<Double> = lines.map { line ->
 }
 ```
 
-All the times are extracted from the CSV file, and then normalized. As the constant values our configuration file specifies are 0.0 and 1.0, and all the registers are initialized to 1.0 in our problem definition file, time values ranging from -10 to over 200 are easily too large for our constant and initialized values to make a difference, so normalizing them to 0.0 to 1.0 should help the performance. However, when we use our C program for prediction, we need to normalize those values as well before inputting them to the program.
+We extract the values and normalize them as well.
 
 ```
 val values: List<Double> = lines.map { line ->
@@ -237,43 +240,41 @@ val normalizedValues: List<Double> = values.map { value ->
 }
 ```
 
-We extract the values and normalize them as well.
+We repeat for each sample.
 
 ```
 for (i in windowSize..(lines.size - 1))
 ```
 
-We repeat for each sample.
+We format the values in our time window as features, named **t-1**, **t-2**, **t-3**, etc.
 
 ```
 val temp = MutableList(windowSize, { j -> Feature(name = "t-" + (windowSize - j), value = normalizedValues.get(i - windowSize + j)) })
 ```
 
-We format the values in our time window as features, named **t-1**, **t-2**, **t-3**, etc.
+We add the time to the list of features, after the values in our time window.
 
 ```
 temp.add(Feature(name = "time", value = normalizedTimes.get(i)))
 ```
 
-We add the time to the list of features, after the values in our time window.
+We finish making one sample and add it to the dataset's features.
 
 ```
 features.add(Sample(temp))
 ```
 
-We finish making one sample and add it to the dataset's features.
+We add the corresponding value to the dataset's targets.
 
 ```
 targets.add(normalizedValues.get(i))
 ```
 
-We add the corresponding value to the dataset's targets.
+The Dataset is returned to be used for training.
 
 ```
 return Dataset(features, targets)
 ```
-
-The Dataset is returned to be used for training.
 
 ## Results
 
