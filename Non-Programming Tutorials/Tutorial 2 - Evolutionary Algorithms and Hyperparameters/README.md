@@ -495,7 +495,7 @@ After a few runs, seems it is not significantly better or worse, and I get a bes
 
 In my experiments, making the mutations less often and drastic seemed to yield similar results.
 
-## Experiment with the evolutionary algorithms
+## Experimenting with the evolutionary algorithms
 
 Here's something else we can try, as there's another evolutionary algorithm we can try, called Island Migration, which may help the performance by seperating the evolution process into islands. In Island Migration, each island runs its own LGP like the normal LGP we just performed, for a specified number of generations, then a specified number of individuals migrate to between islands. This process is repeated until the maximum number of generations is reached or a solution with a perfect fitness (i.e. 0) is found. This numberOfRunsalgorithm tends to maintain a greater diversity of individuals than our normal evolutionary algorithm (i.e. Steady State). Let's try it out. So we add a few more command line arguments, specifying that we want to use Island Migration, the number of Islands we want, the migration interval and the migration size. For example, here we have 4 islands, migration happens every 10 generations, and each time 10 individuals migrate from one island to another.
 
@@ -503,9 +503,159 @@ Here's something else we can try, as there's another evolutionary algorithm we c
 kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-5.json Pagie-1.csv IslandMigration 4 10 10
 ```
 
-After a few runs, we can get more stable performance and I get a best fitness of 0.13.
+```
+Using specified configuration file (Pagie-1-5.json)...
+Using specified data set file (Pagie-1.csv)...
+Using specified evolutionary algorithm (IslandMigration)...
+Running...
+
+Dataset details:
+numFeatures = 2, numSamples = 676
+
+Configuration:
+	initialMinimumProgramLength = 20
+	initialMaximumProgramLength = 100
+	minimumProgramLength = 5
+	maximumProgramLength = 500
+	operations = [lgp.lib.operations.Addition, lgp.lib.operations.Subtraction, lgp.lib.operations.Multiplication, lgp.lib.operations.Division]
+	constantsRate = 0.5
+	constants = [0.0, 1.0]
+	numCalculationRegisters = 15
+	populationSize = 1000
+	featuresBeingCategorical = [false, false]
+	outputsBeingCategorical = [false]
+	crossoverRate = 0.8
+	microMutationRate = 0.8
+	macroMutationRate = 0.8
+	generations = 1000
+	numOffspring = 50
+	branchInitialisationRate = 0.0
+	stoppingCriterion = 0.0
+
+Results:
+Run 1 (best fitness = 0.1532264850180447)
+r[8] = r[12] + 1.0
+r[10] = 0.0 - r[8]
+r[14] = r[16] - r[10]
+r[15] = r[9] - 1.0
+r[0] = f1 * r[7]
+r[9] = 1.0 - f0
+r[16] = r[14] / f0
+r[4] = r[9] * f1
+r[12] = r[11] / 1.0
+r[8] = 1.0 / r[15]
+r[2] = 0.0 - r[16]
+r[16] = r[2] * r[15]
+r[10] = r[2] * 1.0
+r[11] = r[16] - r[4]
+r[12] = r[12] / r[8]
+r[4] = 1.0 - r[11]
+r[3] = r[12] - r[9]
+r[15] = r[3] - r[10]
+r[8] = r[4] + r[9]
+r[9] = 0.0 - r[14]
+r[0] = 1.0 / 1.0
+r[9] = r[8] - r[9]
+r[3] = 0.0 - r[15]
+r[8] = 1.0 / r[3]
+r[15] = 0.0 / r[9]
+r[11] = r[2] - r[15]
+r[2] = 1.0 + f1
+r[5] = f0 * r[8]
+r[4] = 0.0 - r[11]
+r[8] = r[2] - r[5]
+r[2] = r[4] + r[8]
+r[2] = f1 / r[2]
+r[0] = r[2] + 1.0
+
+
+Stats (last generation only):
+
+generation = 1000
+bestFitness = 0.1532264850180447
+meanFitness = 3.946382215254556E40
+standardDeviationFitness = 7.362058040493826E41
+meanProgramLength = 144.6235
+meanEffectiveProgramLength = 19.52875
+```
+
+After a few runs, I get a best fitness of 0.15.
 
 ![Pagie-1-5 Island Migration](Pagie-1-5-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-5.json with Island Migration")
+
+## Early stopping
+
+We can see in the graph above that the best fitness reached 0.13 at one point, but went back up again, maybe we can tell the program to stop once the best fitness drops below 0.14.
+
+```
+"stoppingCriterion": 0.14
+```
+
+```
+kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-6.json Pagie-1.csv IslandMigration 4 10 10
+```
+
+```
+Using specified configuration file (Pagie-1-6.json)...
+Using specified data set file (Pagie-1.csv)...
+Using specified evolutionary algorithm (IslandMigration)...
+Running...
+
+Dataset details:
+numFeatures = 2, numSamples = 676
+
+Configuration:
+	initialMinimumProgramLength = 20
+	initialMaximumProgramLength = 100
+	minimumProgramLength = 5
+	maximumProgramLength = 500
+	operations = [lgp.lib.operations.Addition, lgp.lib.operations.Subtraction, lgp.lib.operations.Multiplication, lgp.lib.operations.Division]
+	constantsRate = 0.5
+	constants = [0.0, 1.0]
+	numCalculationRegisters = 15
+	populationSize = 1000
+	featuresBeingCategorical = [false, false]
+	outputsBeingCategorical = [false]
+	crossoverRate = 0.8
+	microMutationRate = 0.8
+	macroMutationRate = 0.8
+	generations = 1000
+	numOffspring = 50
+	branchInitialisationRate = 0.0
+	stoppingCriterion = 0.14
+
+Results:
+Run 1 (best fitness = 0.12073984877432739)
+r[3] = r[10] * f0
+r[15] = r[8] - 0.0
+r[4] = r[2] * r[15]
+r[2] = 1.0 / r[16]
+r[0] = r[3] * f1
+r[6] = 1.0 / f0
+r[0] = r[6] / r[2]
+r[12] = r[2] / r[4]
+r[10] = r[12] - 1.0
+r[14] = r[10] - f0
+r[4] = 1.0 * r[14]
+r[12] = r[4] * f0
+r[9] = r[2] - r[12]
+r[11] = 1.0 / r[9]
+r[0] = 1.0 + r[11]
+
+
+Stats (last generation only):
+
+generation = 330
+bestFitness = 0.12073984877432739
+meanFitness = 9.615378850117503E36
+standardDeviationFitness = 6.080539333893709E38
+meanProgramLength = 88.28975
+meanEffectiveProgramLength = 10.39825
+```
+
+After a few runs, I get a best fitness of 0.12.
+
+![Pagie-1-6 Island Migration](Pagie-1-6-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-6.json with Island Migration")
 
 ## Summary
 
