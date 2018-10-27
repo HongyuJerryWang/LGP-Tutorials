@@ -4,11 +4,7 @@
 
 ## Overview
 
-We will perform LGP on the Iris dataset, from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris).
-
-We'll do a binary classification this time, predicting whether a flower is Iris Setosa or not. While classifying all three species is more of a wrap-around problem, which can be solved by splicing three (or two) such classification programs together, one for each species, and having one final algorithm to process the predictions of these programs and giving one final result.
-
-In this repository is the processed Iris dataset, where Iris Setosa is marked 1 and the other species are marked 0.
+We will perform LGP on the Iris dataset, from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris), to classify the species of a flower using the length and width of its sepals and petals.
 
 We will need three program files:
 Main.kt to run the program
@@ -25,25 +21,97 @@ We'll add Median to our operations and see if it helps with the classification t
 
 ## Running
 
-Please make a new directory and have a copy of your **LGP.jar**, **argparser.jar** and **xenocom.jar** in it, or alternatively please link to their locations when you compile and run your program.
+Please download **Main.kt**, **CustomOperators.kt**, **CustomOperatorsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial2CustomOperators**.
 
-Download the following file from this repository into the directory: **Main.kt**, **CustomOperatorsExperiment.kt**, **CustomOperators.kt**, **configuration.json** and **dataset.csv**.
-
-Compile
+In **ProgrammingTutorial2CustomOperators**, compile
 
 ```
-kotlinc -cp LGP.jar:argparser.jar:xenocom.jar -no-stdlib *.kt
+kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
 ```
 
-Run
+Run (please note that this problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so we are using the more advanced IslandMigration algorithm here, also **configuration.json** allows deeper and wider searches into the search space, so this may run for a while)
 
 ```
-kotlin -cp LGP.jar:argparser.jar:xenocom.jar:. Main configuration.json dataset.csv
+kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration.json dataset.csv IslandMigration 4 10 10
 ```
 
 ## Analysis
 
-The **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom operators you want to use.
+When there are categorical inputs or outputs, they need to be vectorized in one-hot encoding for the training process. Please fill in featuresBeingCategorical and outputsBeingCategorical accordingly in **configuration.json** and call the *vectorize* method.
+
+```
+private val vectorization = CsvDatasetLoader.vectorize(this.datasetFilename, this.configuration.featuresBeingCategorical.map { value -> value.toBoolean() }, this.configuration.outputsBeingCategorical.map { value -> value.toBoolean() })
+private val inputVectorization = vectorization.first
+private val outputVectorization = vectorization.second
+```
+
+This vectorization will be used in multiple places to ensure the correct training of the program and the production of the resulting C program.
+
+```
+CoreModuleType.ProgramGenerator to { environment ->
+    BaseProgramGenerator(
+        environment,
+        sentinelTrueValue = 1.0, // Determines the value that represents a boolean "true".
+        outputRegisterIndices = outputVectorization.flatten().map { pair -> pair.first }  // Which registers should be read for a programs output.
+    )
+}
+```
+
+```
+this.environment = Environment(
+    this.configLoader,
+    this.constantLoader,
+    this.operationLoader,
+    this.defaultValueProvider,
+    this.fitnessFunction,
+    this.inputVectorization,
+    // Collect results and output them to the file "result.csv".
+    ResultAggregators.BufferedResultAggregator(
+        ResultOutputProviders.CsvResultOutputProvider(
+            filename = "results.csv"
+        )
+    )
+)
+```
+
+```
+val featureIndices = 0 until inputVectorization.count()
+val targetIndices = inputVectorization.count() until (inputVectorization.count() + outputVectorization.count())
+
+val csvLoader = CsvDatasetLoader(
+    reader = BufferedReader(FileReader(this.datasetFilename)),
+    featureParseFunction = ParsingFunctions.vectorizedDoubleFeatureParsingFunction(featureIndices, inputVectorization),
+    targetParseFunction = ParsingFunctions.vectorizedDoubleTargetParsingFunction(targetIndices, outputVectorization)
+)
+```
+
+```
+class CustomOperatorsExperimentSolution(
+    override val problem: String,
+    val result: TrainingResult<Double>,
+    val dataset: Dataset<Double>,
+    val inputVectorization: List<List<Pair<Int, String?>>>,
+    val outputVectorization: List<List<Pair<Int, String?>>>
+) : Solution<Double>
+```
+
+```
+return CustomOperatorsExperimentSolution(
+    problem = this.name,
+    result = trainer.train(dataset),
+    dataset = dataset,
+    inputVectorization = this.inputVectorization,
+    outputVectorization = this.outputVectorization
+)
+```
+
+```
+val translated = ExtendedProgramTranslator(true, solution.inputVectorization, solution.outputVectorization).translate(best as BaseProgram<Double>)
+```
+
+The vectorization mechanism is compatible with non-categorical inputs and outputs (e.g. numeric values). In fact, the program for the non-programming tutorial is integrated with vectorization as well, and can deal with both categorical and non-categorical values.
+
+Besides that, the **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom operators you want to use.
 
 ```
 // Use the custom macro-mutation operator.
@@ -81,6 +149,8 @@ Let's have a look at the custom operators in our **CustomOperators.kt**.
 
 ### CustomMutationOperator
 
+A macro mutation on a program is either inserting a new instruction or deleting an existing instruction.
+
 ```
 private enum class MacroMutationType {
     Insertion,
@@ -88,7 +158,7 @@ private enum class MacroMutationType {
 }
 ```
 
-A macro mutation on a program is either inserting a new instruction or deleting an existing instruction.
+We determine whether an insertion or a deletion should be performed, by the probabilities given to them.
 
 ```
 val mutationType = if (random.nextDouble() < this.insertionRate) {
@@ -98,13 +168,13 @@ val mutationType = if (random.nextDouble() < this.insertionRate) {
 }
 ```
 
-We determine whether an insertion or a deletion should be performed, by the probabilities given to them.
+We randomly select an instruction at a position i (mutation point).
 
 ```
 val mutationPoint = random.randInt(0, programLength - 1)
 ```
 
-We randomly select an instruction at a position i (mutation point).
+We can only perform an insertion if the maximum program length hasn't been reached, and either the mutation type is insertion or no deletion can be performed. We randomly generate an instruction and insert it into the mutation point.
 
 ```
 if (programLength < maximumProgramLength &&
@@ -116,7 +186,7 @@ if (programLength < maximumProgramLength &&
 }
 ```
 
-We can only perform an insertion if the maximum program length hasn't been reached, and either the mutation type is insertion or no deletion can be performed. We randomly generate an instruction and insert it into the mutation point.
+We delete the instruction at the mutation point if otherwise.
 
 ```
 else if (programLength > minimumProgramLength &&
@@ -125,9 +195,9 @@ else if (programLength > minimumProgramLength &&
 }
 ```
 
-We delete the instruction at the mutation point if otherwise.
-
 ### CustomMicroMutationOperator
+
+A micro mutation is changing a register or the operator of an instruction, or changing a constant value of the program.
 
 ```
 private enum class MicroMutationType {
@@ -137,13 +207,13 @@ private enum class MicroMutationType {
 }
 ```
 
-A micro mutation is changing a register or the operator of an instruction, or changing a constant value of the program.
+We randomly select an instruction to mutate.
 
 ```
 val instruction = random.choice(individual.instructions)
 ```
 
-We randomly select an instruction to mutate.
+We determine which micro mutation will be performed.
 
 ```
 val p = random.nextDouble()
@@ -160,7 +230,7 @@ val mutationType = when {
 }
 ```
 
-We determine which micro mutation will be performed.
+To perform a register mutation, we randomly select a register. If it's the destination register, we randomly change it to one of the input or culculation registers, but NOT a constant register so the constants don't get overriden. If it's an operand register, we change it to an input, calculation or constant register.
 
 ```
 MicroMutationType.Register -> {
@@ -192,7 +262,7 @@ MicroMutationType.Register -> {
 }
 ```
 
-To perform a register mutation, we randomly select a register. If it's the destination register, we randomly change it to one of the input or culculation registers, but NOT a constant register so the constants don't get overriden. If it's an operand register, we change it to an input, calculation or constant register.
+To perform an operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more.
 
 ```
 MicroMutationType.Operator -> {
@@ -226,7 +296,7 @@ MicroMutationType.Operator -> {
 }
 ```
 
-To perform an operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more.
+To perform a constant mutation, we randomly select a constant register and mutate its value with our constantMutationFunc.
 
 ```
 else -> {
@@ -249,9 +319,9 @@ else -> {
 }
 ```
 
-To perform a constant mutation, we randomly select a constant register and mutate its value with our constantMutationFunc.
-
 ### Median
+
+Define a ternary operation, i.e. an operation with 3 operands.
 
 ```
 enum class CustomArity(override val number: Int) : Arity {
@@ -268,7 +338,7 @@ abstract class TernaryOperation<T>(func: (Arguments<T>) -> T) : Operation<T>(Cus
 }
 ```
 
-Define a ternary operation, i.e. an operation with 3 operands.
+The function for Median gets the median value of 3 values.
 
 ```
 class Median : TernaryOperation<Double>(
@@ -278,7 +348,7 @@ class Median : TernaryOperation<Double>(
 )
 ```
 
-The function for Median gets the median value of 3 values.
+Give some information regarding the operator. The representation is used to help format the program in the command line interface.
 
 ```
 override val representation = "Median"
@@ -288,15 +358,13 @@ override val information = ModuleInformation(
 )
 ```
 
-Give some information regarding the operator. The representation is used to help format the program in the command line interface, but as it's an operator of a custom arity, it cannot be displayed, so the representation will have no practical effect.
+We define how it will be translated into a C program instruction.
 
 ```
 override fun toString(operands: MutableList<RegisterIndex>, destination: RegisterIndex): String {
     return "r[" + destination + "] = max(min(r[" + operands[0] + "], r[" + operands[1] + "]), min(max(r[" + operands[0] + "], r[" + operands[1] + "]), r[" + operands[2] + "]))"
 }
 ```
-
-We define how it will be translated into a C program instruction.
 
 ## Results
 
