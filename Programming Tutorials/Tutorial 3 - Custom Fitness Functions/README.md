@@ -4,7 +4,19 @@
 
 ## Overview
 
-We'll perform LGP to simulate a binary adder, which takes the bits of two binary numbers as its input, and produces the bits of their sum as its output.
+We'll perform LGP to simulate a [full adder](https://en.wikipedia.org/wiki/Adder_(electronics)#Full_adder), which takes two input bits (a and b) and one carry-over bit (c_in) as its input, and produces one carry-over bit (c_out) and one sum bit (s) as its output.
+
+The truth table:
+
+a | b | c_in | c_out | s
+0 | 0 | 0 | 0 | 0
+0 | 0 | 1 | 0 | 1
+0 | 1 | 0 | 0 | 1
+0 | 1 | 1 | 1 | 0
+1 | 0 | 0 | 0 | 1
+1 | 0 | 1 | 1 | 0
+1 | 1 | 0 | 1 | 0
+1 | 1 | 1 | 1 | 1
 
 We will need three program files:
 Main.kt to run the program
@@ -13,7 +25,7 @@ CustomFitnessFunctions.kt to define the custom fitness functions
 
 ## Custom Fitness Functions
 
-We can use the fitness functions included in the API, but they don't diffrentiate a more significant bit from a less significant bit and can only treat each bit individually and uniformly, which is mathematically incorrect (e.g. 1100 is further from 0000 than 0011 from 0000 because the different bits are more significant in the former case. Also 11 is further from 00 than 10 from 01 because in the former case the differences in the bits add up while in the latter they cancel each other out. But the default fitness functions will misjudge these cases to have the same fitness).
+We can use the fitness functions included in the API, but they don't diffrentiate a more significant bit from a less significant bit and can only treat each bit individually and uniformly, which is mathematically incorrect (e.g. 10 is further from 00 than 01 from 00 because the different bit is more significant in the former case. Also 11 is further from 00 than 10 from 01 because in the former case the differences in the bits add up while in the latter they cancel each other out. But the default fitness functions will misjudge these cases to have the same fitness).
 
 To calculate the difference between the actual and the expected values, we need to convert the bits back into numbers and then apply the fitness function we'd like to perform on them.
 
@@ -25,7 +37,7 @@ We'll implement four common fitness functions
 
 ## Running
 
-Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunctionsExperiment.kt**, **configuration1.kt**, **configuration2.kt**, **configuration3.kt**, **dataset1.csv** (1-bit adder), **dataset2.csv** (2-bit adder) and **dataset3.csv** (3-bit adder) from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial3CustomFitnessFunctions**.
+Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunctionsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial3CustomFitnessFunctions**.
 
 In **ProgrammingTutorial3CustomFitnessFunctions**, compile
 
@@ -36,15 +48,7 @@ kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
 Run
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration1.json dataset1.csv
-```
-
-```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration2.json dataset2.csv
-```
-
-```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration3.json dataset3.csv
+kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration.json dataset.csv
 ```
 
 ## Analysis
@@ -85,7 +89,7 @@ This is the function that specifies how our testcase.txt file is produced. It is
 
 Let's take a closer look at how the *difference* value is calculated in this function.
 
-The *outputs* is a list of outputs, and in an earlier tutorial we mentioned that one output is a vector of values, e.g. here `[`1.0, 0.0, 1.0`]` represents 101 in binary and 5 in decimal.
+The *outputs* is a list of outputs, and in an earlier tutorial we mentioned that one output is a vector of values, e.g. here `[`1.0, 0.0`]` represents 10 in binary and 2 in decimal.
 
 ```
 outputs: List<List<Double>>
@@ -160,13 +164,20 @@ So this is how the *difference* value is calculated, our custom fitness function
 
 ### CustomFitnessFunctionsExperiment.kt
 
-This file is very similar to the one from our last tutorial, too, the only significant difference being
+This file is very similar to the one from our last tutorial, too, the significant difference being we use the Mean Squared Error from our custom fitness functions
 
 ```
 override val fitnessFunction = CustomFitnessFunctions.binaryMSE
 ```
 
-We use the Mean Squared Error from our custom fitness functions.
+Also, we shift the output registers to the end of the calculation registers so the input and output registers don't overlap, so LGP can produce a good program more easily.
+
+```
+private val outputShift = inputVectorization.flatten().count() + configuration.numCalculationRegisters - 1 - vectorization.second.last().last().first
+private val outputVectorization = vectorization.second.map { vector ->
+    vector.map { pair -> Pair(pair.first + outputShift, pair.second) }
+}
+```
 
 ### CustomFitnessFunctions.kt
 
@@ -301,4 +312,6 @@ val binaryRMSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
 
 ## Results
 
-Please take a look at the files generated by the program: **results1.csv**, **results2.csv**, **results3.csv**, **testcases1.txt**, **testcases2.txt**, **testcases3.txt**, **custom_fitness_functions_experiment_1.c**, **custom_fitness_functions_experiment_2.c** and **custom_fitness_functions_experiment_3.c**. Feel free to compare your results to the results in this repository, and compile and run the C program.
+Please take a look at the files generated by the program: **results.csv**, **testcases.txt**, **custom_fitness_functions_experiment.c**. Feel free to compare your results to the results in this repository, and compile and run the C program.
+
+In fact the LGP program in this tutorial can simulate all kinds of circuits, but the basic logic operators of NOT, AND, OR and XOR are too low-level for more complicated circuits, and for LGP to find a good solution in a reasonable amount of time, larger modules are needed as operations, e.g. half adder, full adder, multiplexer, etc.
