@@ -50,7 +50,10 @@ class CustomFitnessFunctionsExperiment(
     private val configuration = this.configLoader.load()
     private val vectorization = CsvDatasetLoader.vectorize(this.datasetFilename, this.configuration.featuresBeingCategorical.map { value -> value.toBoolean() }, this.configuration.outputsBeingCategorical.map { value -> value.toBoolean() })
     private val inputVectorization = vectorization.first
-    private val outputVectorization = vectorization.second
+    private val outputShift = inputVectorization.flatten().count() + configuration.numCalculationRegisters - 1 - vectorization.second.last().last().first
+    private val outputVectorization = vectorization.second.map { vector ->
+        vector.map { pair -> Pair(pair.first + outputShift, pair.second) }
+    }
     // Load constants from the configuration as double values.
     override val constantLoader = DoubleConstantLoader(constants = this.configuration.constants)
     // Load operations from the configuration (operations are resolved using their class name).

@@ -1,0 +1,21 @@
+{
+    "initialMinimumProgramLength": 10,
+    "initialMaximumProgramLength": 100,
+    "minimumProgramLength": 5,
+    "maximumProgramLength": 500,
+    "operations": [
+        "lgp.lib.operations.And",
+        "lgp.lib.operations.Or",
+        "lgp.lib.operations.Xor"
+    ],
+    "constantsRate": 0,
+    "numCalculationRegisters": 5,
+    "populationSize": 10000,
+    "generations": 1000,
+    "numOffspring": 200,
+    "crossoverRate": 0.8,
+    "microMutationRate": 0.8,
+    "macroMutationRate": 0.8,
+    "featuresBeingCategorical": [false, false, false],
+    "outputsBeingCategorical": [false, false]
+}
