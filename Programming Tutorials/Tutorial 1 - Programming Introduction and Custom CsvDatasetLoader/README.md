@@ -24,9 +24,9 @@ Please note, we need a custom dataset loader because of the specific way in whic
 
 ## Running
 
-Download **Main.kt**, **TimeSeriesExperiment.kt**, **TimeSeriesExperimentCsvDatasetLoader.kt**, **configuration.json** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial1ProgrammingIntroductionAndCustomCsvDatasetLoader**.
+Download **Main.kt**, **TimeSeriesExperiment.kt**, **TimeSeriesExperimentCsvDatasetLoader.kt**, **configuration.json** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial3**.
 
-In **ProgrammingTutorial1ProgrammingIntroductionAndCustomCsvDatasetLoader**, compile
+In **Tutorial3**, compile
 
 ```
 kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
