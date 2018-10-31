@@ -87,7 +87,7 @@ Alternatively you can download the newest version from the [releases](https://gi
 
 ## Additional libraries
 
-Please download **argparser.jar** and **xenocom.jar** from the root of this repository into the directory **LGP-Tutorials**. Our later tutorials will make use of these libraries.
+Please download **argparser.jar** and **xenocom.jar** from the **tutorial_libs** folder in this repository into the directory **LGP-Tutorials**. Our later tutorials will make use of these libraries.
 
 Please note, [argparser](https://github.com/xenomachina/kotlin-argparser) and [xenocom](https://github.com/xenomachina/xenocom) are API's on GitHub. They were used to build the jar files provided here. You can clone them and build the jar files yourself.
 
