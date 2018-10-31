@@ -7,12 +7,9 @@
 We will perform LGP on the Iris dataset, from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris), to classify the species of a flower using the length and width of its sepals and petals.
 
 We will need three program files:
-
-Main.kt to run the program
-
-CustomOperatorsExperiment.kt to define the problem, i.e. how LGP should be setup and run
-
-CustomOperators.kt to define the custom operators
+1. Main.kt to run the program
+2. CustomOperatorsExperiment.kt to define the problem, i.e. how LGP should be setup and run
+3. CustomOperators.kt to define the custom operators
 
 ## Custom Operators
 
