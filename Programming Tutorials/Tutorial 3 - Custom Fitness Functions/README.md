@@ -1,4 +1,4 @@
-# LGP Programming Tutorial 2: Custom Operators
+# LGP Programming Tutorial 3: Custom Fitness Functions
 
 > *Making custom fitness functions for a specific problem
 
@@ -9,6 +9,7 @@ We'll perform LGP to simulate a [full adder](https://en.wikipedia.org/wiki/Adder
 The truth table:
 
 a | b | c_in | c_out | s
+---|---|---|---|---
 0 | 0 | 0 | 0 | 0
 0 | 0 | 1 | 0 | 1
 0 | 1 | 0 | 0 | 1
@@ -42,13 +43,14 @@ Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunct
 In **ProgrammingTutorial3CustomFitnessFunctions**, compile
 
 ```
-kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
+export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
+kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
 Run
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration.json dataset.csv
+kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv
 ```
 
 ## Analysis
