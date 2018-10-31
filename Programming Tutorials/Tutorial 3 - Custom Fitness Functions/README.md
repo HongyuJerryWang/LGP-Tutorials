@@ -38,9 +38,9 @@ We'll implement four common fitness functions
 
 ## Running
 
-Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunctionsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial3CustomFitnessFunctions**.
+Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunctionsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial5**.
 
-In **ProgrammingTutorial3CustomFitnessFunctions**, compile
+In **Tutorial5**, compile
 
 ```
 export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
