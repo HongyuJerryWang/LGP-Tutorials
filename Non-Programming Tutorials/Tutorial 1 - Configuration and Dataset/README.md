@@ -6,12 +6,13 @@
 
 This tutorial is based on the [tutorial](https://github.com/JedS6391/LGP-Tutorial/tree/develop/src/main/kotlin/lgp/tutorial/linearRegression) made by Jed Simson.
 
-Please download **Main.kt**, **ProblemDefinition.kt**, **configuration1.json** and **dataset1.json** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **NonProgrammingTutorial1ConfigurationAndDataset**.
+Please download **Main.kt**, **ProblemDefinition.kt**, **configuration1.json** and **dataset1.json** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial1**.
 
-In **NonProgrammingTutorial1ConfigurationAndDataset**, compile with
+In **Tutorial1**, compile with
 
 ```
-kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
+export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
+kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
 ## configuration.json
@@ -95,13 +96,13 @@ So we save our dataset file as "dataset1.csv". Just like the configuration, if w
 We can run the program using this format.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main CONFIGURATION_FILENAME DATASET_FILENAME
+kotlin -cp $CLASSPATH:. Main CONFIGURATION_FILENAME DATASET_FILENAME
 ```
 
 So we run the program on the files we just downloaded.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration1.json dataset1.csv
+kotlin -cp $CLASSPATH:. Main configuration1.json dataset1.csv
 ```
 
 After running our own configuration and dataset a few times, we may get a perfect result, indicated by "bestFitness = 0.0":
