@@ -45,7 +45,7 @@ Let's go through the program files to see how it performs LGP.
 
 ### Main.kt
 
-There are 7 arguments in total, 5 of which are optional as they have default values. The user has to specify the configuration file and the dataset file. The program by default uses a window size of 3, SteadyState as the evolutionary algorithm and, if IslandMigration is used, an island number of 4, a migration interval of 10 generations and a migration size of 10 individuals.
+There are 7 arguments in total, 5 of which are optional as they have default values. The user has to specify the configuration file and the dataset file. The program by default uses a window size of 3, SteadyState as the evolutionary algorithm and, if IslandMigration is used, an island number of 4, a migration interval of 10 generations and a migration size of 10 individuals:
 
 ```
 class Arguments(parser: ArgParser) {
@@ -90,7 +90,7 @@ class Arguments(parser: ArgParser) {
 }
 ```
 
-The testcases of the final solution by LGP are computed and output to the file **testcases.txt**. It should be noted that each output is a list of doubles as the output is a vector. In this case it's a vector of one value, but still need to be treated as a list. How the difference is computed is up to the programmer, here I define the difference between an actual output and the corresponding expected output to be the sum of the differences between their individual values.
+The testcases of the final solution by LGP are computed and output to the file **testcases.txt**. It should be noted that each output is a list of doubles as the output is a vector. In this case it's a vector of one value, but still need to be treated as a list. How the difference is computed is up to the programmer, here I define the difference between an actual output and the corresponding expected output to be the sum of the differences between their individual values:
 
 ```
 private val verboseMSE = object : FitnessFunction<Double>() {
@@ -116,7 +116,7 @@ private val verboseMSE = object : FitnessFunction<Double>() {
 }
 ```
 
-The arguments are passed to the problem definition, and used to setup and run LGP.
+The arguments are passed to the problem definition, and used to setup and run LGP:
 
 ```
 val problem = TimeSeriesExperiment(
@@ -130,7 +130,7 @@ val problem = TimeSeriesExperiment(
 )
 ```
 
-LGP is run, the solution is returned. The dataset will later be used for the testcases.
+LGP is run, the solution is returned. The dataset will later be used for the testcases:
 
 ```
 problem.initialiseEnvironment()
@@ -142,7 +142,7 @@ val solution = problem.solve()
 val dataset = solution.dataset
 ```
 
-The statistics of each run are printed, e.g. best fitness, mean fitness, fitness standard deviation, etc.
+The statistics of each run are printed, e.g. best fitness, mean fitness, fitness standard deviation, etc:
 
 ```
 println("Results:")
@@ -160,7 +160,7 @@ solution.result.evaluations.forEachIndexed { run: Int, res: EvolutionResult<Doub
 }
 ```
 
-The best solution is selected from all the runs, its testcases recorded, and is translated into a C program.
+The best solution is selected from all the runs, its testcases recorded, and is translated into a C program:
 
 ```
 val bestPrograms = solution.result.evaluations.map { res: EvolutionResult<Double> -> res.best as BaseProgram<Double> }
@@ -196,7 +196,7 @@ class TimeSeriesExperimentCsvDatasetLoader constructor(
 ) : DatasetLoader<Double>
 ```
 
-All the times are extracted from the CSV file, and then normalized. As the constant values our configuration file specifies are 0.0 and 1.0, and all the registers are initialized to 1.0 in our problem definition file, time values ranging from -10 to over 200 are easily too large for our constant and initialized values to make a difference, so normalizing them to 0.0 to 1.0 should help the performance. However, when we use our C program for prediction, we need to normalize those values as well before inputting them to the program.
+All the times are extracted from the CSV file, and then normalized. As the constant values our configuration file specifies are 0.0 and 1.0, and all the registers are initialized to 1.0 in our problem definition file, time values ranging from -10 to over 200 are easily too large for our constant and initialized values to make a difference, so normalizing them to 0.0 to 1.0 should help the performance. However, when we use our C program for prediction, we need to normalize those values as well before inputting them to the program:
 
 ```
 val times: List<Double> = lines.map { line ->
@@ -220,7 +220,7 @@ val values: List<Double> = lines.map { line ->
 }
 ```
 
-We extract the values and normalize them as well.
+We extract the values and normalize them as well:
 
 ```
 val values: List<Double> = lines.map { line ->
@@ -240,37 +240,37 @@ val normalizedValues: List<Double> = values.map { value ->
 }
 ```
 
-We repeat for each sample.
+We repeat for each sample:
 
 ```
 for (i in windowSize..(lines.size - 1))
 ```
 
-We format the values in our time window as features, named **t-1**, **t-2**, **t-3**, etc.
+We format the values in our time window as features, named **t-1**, **t-2**, **t-3**, etc:
 
 ```
 val temp = MutableList(windowSize, { j -> Feature(name = "t-" + (windowSize - j), value = normalizedValues.get(i - windowSize + j)) })
 ```
 
-We add the time to the list of features, after the values in our time window.
+We add the time to the list of features, after the values in our time window:
 
 ```
 temp.add(Feature(name = "time", value = normalizedTimes.get(i)))
 ```
 
-We finish making one sample and add it to the dataset's features.
+We finish making one sample and add it to the dataset's features:
 
 ```
 features.add(Sample(temp))
 ```
 
-We add the corresponding value to the dataset's targets.
+We add the corresponding value to the dataset's targets:
 
 ```
 targets.add(normalizedValues.get(i))
 ```
 
-The Dataset is returned to be used for training.
+The Dataset is returned to be used for training:
 
 ```
 return Dataset(features, targets)
