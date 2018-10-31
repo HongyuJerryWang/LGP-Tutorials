@@ -30,7 +30,7 @@ export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
 kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
-Run (please note that this problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so we are using the more advanced IslandMigration algorithm here, also **configuration.json** allows deeper and wider searches into the search space, so this may run for a while)
+This problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so the more advanced IslandMigration algorithm is recommended, also in **configuration.json** we should allow deeper and wider searches into the search space. Run with the command below, it may run for a while.
 
 ```
 kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv IslandMigration 4 10 10
@@ -38,7 +38,7 @@ kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv IslandMigration 4 10
 
 ## Analysis
 
-When there are categorical inputs or outputs, they need to be vectorized in one-hot encoding for the training process. Please fill in featuresBeingCategorical and outputsBeingCategorical accordingly in **configuration.json** and call the *vectorize* method.
+When there are categorical inputs or outputs, they need to be vectorized in one-hot encoding for the training process. Please fill in featuresBeingCategorical and outputsBeingCategorical accordingly in **configuration.json** and call the *vectorize* method:
 
 ```
 private val vectorization = CsvDatasetLoader.vectorize(this.datasetFilename, this.configuration.featuresBeingCategorical.map { value -> value.toBoolean() }, this.configuration.outputsBeingCategorical.map { value -> value.toBoolean() })
@@ -46,7 +46,7 @@ private val inputVectorization = vectorization.first
 private val outputVectorization = vectorization.second
 ```
 
-This vectorization will be used in multiple places to ensure the correct training of the program and the production of the resulting C program.
+This vectorization will be used in multiple places to ensure the correct training of the program and the production of the resulting C program:
 
 ```
 CoreModuleType.ProgramGenerator to { environment ->
@@ -112,7 +112,7 @@ val translated = ExtendedProgramTranslator(true, solution.inputVectorization, so
 
 The vectorization mechanism is compatible with non-categorical inputs and outputs (e.g. numeric values). In fact, the program for the non-programming tutorial is integrated with vectorization as well, and can deal with both categorical and non-categorical values.
 
-Besides that, the **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom operators you want to use.
+Besides that, the **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom operators you want to use:
 
 ```
 // Use the custom macro-mutation operator.
@@ -134,7 +134,7 @@ CoreModuleType.MicroMutationOperator to { environment ->
 }
 ```
 
-Please also make sure to add the Median operator to the list of operations in our configuration file.
+Please also make sure to add the Median operator to the list of operations in our configuration file:
 
 ```
 "operations": [
@@ -150,7 +150,7 @@ Let's have a look at the custom operators in our **CustomOperators.kt**.
 
 ### CustomMutationOperator
 
-A macro mutation on a program is either inserting a new instruction or deleting an existing instruction.
+A macro mutation on a program is either inserting a new instruction or deleting an existing instruction:
 
 ```
 private enum class MacroMutationType {
@@ -159,7 +159,7 @@ private enum class MacroMutationType {
 }
 ```
 
-We determine whether an insertion or a deletion should be performed, by the probabilities given to them.
+We determine whether an insertion or a deletion should be performed, by the probabilities given to them:
 
 ```
 val mutationType = if (random.nextDouble() < this.insertionRate) {
@@ -169,13 +169,13 @@ val mutationType = if (random.nextDouble() < this.insertionRate) {
 }
 ```
 
-We randomly select an instruction at a position i (mutation point).
+We randomly select an instruction at a position i (mutation point):
 
 ```
 val mutationPoint = random.randInt(0, programLength - 1)
 ```
 
-We can only perform an insertion if the maximum program length hasn't been reached, and either the mutation type is insertion or no deletion can be performed. We randomly generate an instruction and insert it into the mutation point.
+We can only perform an insertion if the maximum program length hasn't been reached, and either the mutation type is insertion or no deletion can be performed. We randomly generate an instruction and insert it into the mutation point:
 
 ```
 if (programLength < maximumProgramLength &&
@@ -187,7 +187,7 @@ if (programLength < maximumProgramLength &&
 }
 ```
 
-We delete the instruction at the mutation point if otherwise.
+We delete the instruction at the mutation point if otherwise:
 
 ```
 else if (programLength > minimumProgramLength &&
@@ -198,7 +198,7 @@ else if (programLength > minimumProgramLength &&
 
 ### CustomMicroMutationOperator
 
-A micro mutation is changing a register or the operator of an instruction, or changing a constant value of the program.
+A micro mutation is changing a register or the operator of an instruction, or changing a constant value of the program:
 
 ```
 private enum class MicroMutationType {
@@ -208,13 +208,13 @@ private enum class MicroMutationType {
 }
 ```
 
-We randomly select an instruction to mutate.
+We randomly select an instruction to mutate:
 
 ```
 val instruction = random.choice(individual.instructions)
 ```
 
-We determine which micro mutation will be performed.
+We determine which micro mutation will be performed:
 
 ```
 val p = random.nextDouble()
@@ -231,7 +231,7 @@ val mutationType = when {
 }
 ```
 
-To perform a register mutation, we randomly select a register. If it's the destination register, we randomly change it to one of the input or culculation registers, but NOT a constant register so the constants don't get overriden. If it's an operand register, we change it to an input, calculation or constant register.
+To perform a register mutation, we randomly select a register. If it's the destination register, we randomly change it to one of the input or culculation registers, but NOT a constant register so the constants don't get overriden. If it's an operand register, we change it to an input, calculation or constant register:
 
 ```
 MicroMutationType.Register -> {
@@ -263,7 +263,7 @@ MicroMutationType.Register -> {
 }
 ```
 
-To perform an operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more.
+To perform an operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more:
 
 ```
 MicroMutationType.Operator -> {
@@ -297,7 +297,7 @@ MicroMutationType.Operator -> {
 }
 ```
 
-To perform a constant mutation, we randomly select a constant register and mutate its value with our constantMutationFunc.
+To perform a constant mutation, we randomly select a constant register and mutate its value with our constantMutationFunc:
 
 ```
 else -> {
@@ -322,7 +322,7 @@ else -> {
 
 ### Median
 
-Define a ternary operation, i.e. an operation with 3 operands.
+Define a ternary operation, i.e. an operation with 3 operands:
 
 ```
 enum class CustomArity(override val number: Int) : Arity {
@@ -339,7 +339,7 @@ abstract class TernaryOperation<T>(func: (Arguments<T>) -> T) : Operation<T>(Cus
 }
 ```
 
-The function for Median gets the median value of 3 values.
+The function for Median gets the median value of 3 values:
 
 ```
 class Median : TernaryOperation<Double>(
@@ -349,7 +349,7 @@ class Median : TernaryOperation<Double>(
 )
 ```
 
-Give some information regarding the operator. The representation is used to help format the program in the command line interface.
+Give some information regarding the operator. The representation is used to help format the program in the command line interface:
 
 ```
 override val representation = "Median"
@@ -359,7 +359,7 @@ override val information = ModuleInformation(
 )
 ```
 
-We define how it will be translated into a C program instruction.
+We define how it will be translated into a C program instruction:
 
 ```
 override fun toString(operands: MutableList<RegisterIndex>, destination: RegisterIndex): String {
@@ -369,4 +369,4 @@ override fun toString(operands: MutableList<RegisterIndex>, destination: Registe
 
 ## Results
 
-Please take a look at the files generated by the program: **results.csv**, **testcases.txt** and **custom_operators_experiment.c**. Feel free to compare your results to the results in this repository, and compile and run the C program. Please refer to the Non-Programming Tutorial 2 for how to tweak the hyperparameters and the evolutionary algorithm.
+Please take a look at the files generated by the program: **results.csv**, **testcases.txt** and **custom_operators_experiment.c**. Feel free to compare your results to the results in this repository, and compile and run the C program.
