@@ -57,7 +57,7 @@ kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv
 
 ### Main.kt
 
-The file is very similar to the one from our last tutorial, the only significant difference being
+The file is very similar to the one from our last tutorial, the only significant difference being:
 
 ```
 private val verboseBinary = object : FitnessFunction<Double>() {
@@ -91,37 +91,37 @@ This is the function that specifies how our testcase.txt file is produced. It is
 
 Let's take a closer look at how the *difference* value is calculated in this function.
 
-The *outputs* is a list of outputs, and in an earlier tutorial we mentioned that one output is a vector of values, e.g. here `[`1.0, 0.0`]` represents 10 in binary and 2 in decimal.
+The *outputs* is a list of outputs, and in an earlier tutorial we mentioned that one output is a vector of values, e.g. here `[`1.0, 0.0`]` represents 10 in binary and 2 in decimal:
 
 ```
 outputs: List<List<Double>>
 ```
 
-The *cases* is a list of FitnessCase, each FitnessCase represents one sample, which consists of a set of *features* and a *target*, and the *target* here is the expected output, i.e. a vector of values.
+The *cases* is a list of FitnessCase, each FitnessCase represents one sample, which consists of a set of *features* and a *target*, and the *target* here is the expected output, i.e. a vector of values:
 
 ```
 cases: List<FitnessCase<Double>>
 ```
 
-So we zip the *cases* with the *outputs* to put each case and its actual output side by side.
+So we zip the *cases* with the *outputs* to put each case and its actual output side by side:
 
 ```
 cases.zip(outputs)
 ```
 
-We extract the expected output from the case.
+We extract the expected output from the case:
 
 ```
 val expected = case.target
 ```
 
-We zip the actual output and the expected output to put each actual bit by its expected bit.
+We zip the actual output and the expected output to put each actual bit by its expected bit:
 
 ```
 actual.zip(expected)
 ```
 
-We calculate the difference in each bit. The differences are signed.
+We calculate the difference in each bit. The differences are signed:
 
 ```
 map { (singleActual, singleExpected) ->
@@ -129,7 +129,7 @@ map { (singleActual, singleExpected) ->
 }
 ```
 
-We calculate the total difference, i.e. the difference between the two numbers represented by the two vectors of bits.
+We calculate the total difference, i.e. the difference between the two numbers represented by the two vectors of bits:
 
 ```
 reduce { moreSignificantBit: Double, lessSignificantBit: Double ->
@@ -137,13 +137,13 @@ reduce { moreSignificantBit: Double, lessSignificantBit: Double ->
 }
 ```
 
-We get the absolute value of the difference.
+We get the absolute value of the difference:
 
 ```
 Math.abs
 ```
 
-The procedure is applied to each pair of expected and actual values, to get the difference of each pair.
+The procedure is applied to each pair of expected and actual values, to get the difference of each pair:
 
 ```
 cases.zip(outputs).map { (case, actual) ->
@@ -156,7 +156,7 @@ cases.zip(outputs).map { (case, actual) ->
 }
 ```
 
-The average difference is calculated.
+The average difference is calculated:
 
 ```
 average()
@@ -166,13 +166,13 @@ So this is how the *difference* value is calculated, our custom fitness function
 
 ### CustomFitnessFunctionsExperiment.kt
 
-This file is very similar to the one from our last tutorial, too, the significant difference being we use the Mean Squared Error from our custom fitness functions
+This file is very similar to the one from our last tutorial, too, the significant difference being we use the Mean Squared Error from our custom fitness functions:
 
 ```
 override val fitnessFunction = CustomFitnessFunctions.binaryMSE
 ```
 
-Also, we shift the output registers to the end of the calculation registers so the input and output registers don't overlap, so LGP can produce a good program more easily.
+Also, we shift the output registers to the end of the calculation registers so the input and output registers don't overlap, so LGP can produce a good program more easily:
 
 ```
 private val outputShift = inputVectorization.flatten().count() + configuration.numCalculationRegisters - 1 - vectorization.second.last().last().first
@@ -183,7 +183,7 @@ private val outputVectorization = vectorization.second.map { vector ->
 
 ### CustomFitnessFunctions.kt
 
-We define our custom fitness functions here, they implement the same interface as our verboseBinary in **Main.kt**, and the *fitness* method takes the *outputs* and the *cases* as arguments. These fitness functions follow the same idea as above. One thing to notice is that the calculated value may not be finite, we need to test against that, and if it is not finite, we need to return a default value.
+We define our custom fitness functions here, they implement the same interface as our verboseBinary in **Main.kt**, and the *fitness* method takes the *outputs* and the *cases* as arguments. These fitness functions follow the same idea as above. One thing to notice is that the calculated value may not be finite, we need to test against that, and if it is not finite, we need to return a default value:
 
 ```
 const val UNDEFINED_FITNESS: Double = 10e9
@@ -196,7 +196,7 @@ return when {
 }
 ```
 
-Please note the bulks of the functions are the same. The numeric difference between an expected value and its actual value is calculated with
+Please note the bulks of the functions are the same. The numeric difference between an expected value and its actual value is calculated with:
 
 ```
 actual.zip(expected).map { (actualValue, expectedValue) ->
@@ -206,7 +206,7 @@ actual.zip(expected).map { (actualValue, expectedValue) ->
 }
 ```
 
-The procedure is applied to every pair of expected and actual cases with
+The procedure is applied to every pair of expected and actual cases with:
 
 ```
 val fitness = cases.zip(outputs).map { (case, actual) ->
@@ -214,7 +214,7 @@ val fitness = cases.zip(outputs).map { (case, actual) ->
 
 Let's walkthrough the four fitness functions we have here.
 
-**binaryMAE** gets the absolute error of each case and then calculates the mean.
+**binaryMAE** gets the absolute error of each case and then calculates the mean:
 
 ```
 val binaryMAE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
@@ -238,7 +238,7 @@ val binaryMAE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
 }
 ```
 
-**binarySSE** gets the squared error of each case and then calculates the sum.
+**binarySSE** gets the squared error of each case and then calculates the sum:
 
 ```
 val binarySSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
@@ -262,7 +262,7 @@ val binarySSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
 }
 ```
 
-**binaryMSE** gets the squared error of each case and then calculates the mean.
+**binaryMSE** gets the squared error of each case and then calculates the mean:
 
 ```
 val binaryMSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
@@ -286,7 +286,7 @@ val binaryMSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
 }
 ```
 
-**binaryRMSE** gets the squared error of each case and then calculates the square root of the mean.
+**binaryRMSE** gets the squared error of each case and then calculates the square root of the mean:
 
 ```
 val binaryRMSE: FitnessFunction<Double> = object : FitnessFunction<Double>() {
