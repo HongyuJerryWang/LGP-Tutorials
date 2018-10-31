@@ -10,7 +10,7 @@ The series starts 10 minutes before a meal and shows the patient immediately hea
 
 ![Blood Sugar](bloodSugar.jpg "Blood Sugar Graph")
 
-We want a program which can predict the blood sugar level given the time and a time window of a few previous blood sugar levels. For example, assuming the time window size to be 3, using the given time 10 and the blood sugar levels at times 7, 8 and 9, the program should predict the blood sugar level at time 10.
+We want a program which can predict the blood sugar level given the current time and a time window of a few previous blood sugar levels. For example, assuming the time window size to be 3, using the given time 10 and the blood sugar levels at times 7, 8 and 9, the program should predict the blood sugar level at time 10.
 
 We will need three program files:
 Main.kt to run the program
