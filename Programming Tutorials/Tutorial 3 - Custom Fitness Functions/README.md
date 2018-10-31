@@ -20,9 +20,9 @@ a | b | c_in | c_out | s
 1 | 1 | 1 | 1 | 1
 
 We will need three program files:
-Main.kt to run the program
-CustomFitnessFunctionsExperiment.kt to define the problem, i.e. how LGP should be setup and run
-CustomFitnessFunctions.kt to define the custom fitness functions
+1. Main.kt to run the program
+2. CustomFitnessFunctionsExperiment.kt to define the problem, i.e. how LGP should be setup and run
+3. CustomFitnessFunctions.kt to define the custom fitness functions
 
 ## Custom Fitness Functions
 
