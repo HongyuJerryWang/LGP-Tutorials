@@ -4,12 +4,13 @@
 
 ## Setup
 
-Please download **Pagie-1-1.json**, **Pagie-1-2.json**, **Pagie-1-3.json**, **Pagie-1-4.json**, **Pagie-1-5.json**, **Pagie-1-6.json** and **Pagie-1.csv** from this repository, and move a copy of **Main.kt** and **ProblemDefinition.kt** from the previous tutorial, into a sub-directory of **LGP-Tutorials**, e.g. **NonProgrammingTutorial2EvolutionaryAlgorithmAndHyperparameters**.
+Please download **Pagie-1-1.json**, **Pagie-1-2.json**, **Pagie-1-3.json**, **Pagie-1-4.json**, **Pagie-1-5.json**, **Pagie-1-6.json** and **Pagie-1.csv** from this repository, and move a copy of **Main.kt** and **ProblemDefinition.kt** from the previous tutorial, into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial2**.
 
-In **NonProgrammingTutorial2EvolutionaryAlgorithmAndHyperparameters**, compile with
+In **Tutorial2**, compile with
 
 ```
-kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
+export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
+kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
 This tutorial does not include programming. We'll perform LGP on a synthetic symbolic regression benchmark, the Pagie-1 (![f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)](math1.jpg "(f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)"), defined by Pagie & Hogeweg in 1997). Which looks like
@@ -38,7 +39,7 @@ This configuration file mostly relies on the default hyperparameter values and o
 Now let's just run our configuration on our dataset.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-1.json Pagie-1.csv
+kotlin -cp $CLASSPATH:. Main Pagie-1-1.json Pagie-1.csv
 ```
 
 ```
@@ -104,7 +105,7 @@ The fact is, the default generation number, 50, is too small for most of the pro
 It is recommended that we keep the old file as a change may make the performance either better or worse.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-2.json Pagie-1.csv
+kotlin -cp $CLASSPATH:. Main Pagie-1-2.json Pagie-1.csv
 ```
 
 ```
@@ -236,7 +237,7 @@ Maybe it's the operations we have, as the default set of addition, subtraction a
 ```
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-3.json Pagie-1.csv
+kotlin -cp $CLASSPATH:. Main Pagie-1-3.json Pagie-1.csv
 ```
 
 ```
@@ -338,7 +339,7 @@ We see that the fitness is improving, which is good, but once in a few hundred g
 Let's see if that improves anything.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-4.json Pagie-1.csv
+kotlin -cp $CLASSPATH:. Main Pagie-1-4.json Pagie-1.csv
 ```
 
 ```
@@ -424,7 +425,7 @@ Let's try making the mutations more often and drastic, and see if anything impro
 ```
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-5.json Pagie-1.csv
+kotlin -cp $CLASSPATH:. Main Pagie-1-5.json Pagie-1.csv
 ```
 
 ```
@@ -500,7 +501,7 @@ In my experiments, making the mutations less often and drastic seemed to yield s
 Here's something else we can try, as there's another evolutionary algorithm we can try, called Island Migration, which may help the performance by seperating the evolution process into islands. In Island Migration, each island runs its own LGP like the normal LGP we just performed, for a specified number of generations, then a specified number of individuals migrate to between islands. This process is repeated until the maximum number of generations is reached or a solution with a perfect fitness (i.e. 0) is found. This numberOfRunsalgorithm tends to maintain a greater diversity of individuals than our normal evolutionary algorithm (i.e. Steady State). Let's try it out. So we add a few more command line arguments, specifying that we want to use Island Migration, the number of Islands we want, the migration interval and the migration size. For example, here we have 4 islands, migration happens every 10 generations, and each time 10 individuals migrate from one island to another.
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-5.json Pagie-1.csv IslandMigration 4 10 10
+kotlin -cp $CLASSPATH:. Main Pagie-1-5.json Pagie-1.csv IslandMigration 4 10 10
 ```
 
 ```
@@ -592,7 +593,7 @@ We can see in the graph above that the best fitness reached 0.13 at one point, b
 ```
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main Pagie-1-6.json Pagie-1.csv IslandMigration 4 10 10
+kotlin -cp $CLASSPATH:. Main Pagie-1-6.json Pagie-1.csv IslandMigration 4 10 10
 ```
 
 ```
