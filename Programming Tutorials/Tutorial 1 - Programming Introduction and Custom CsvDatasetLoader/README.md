@@ -285,5 +285,3 @@ Below are the graphs of expected and predicted blood sugar levels after normaliz
 ![Expected Blood Sugar](Expected.jpg "Expected Blood Sugar Graph")
 
 ![Predicted Blood Sugar](Predicted.jpg "Predicted Blood Sugar Graph")
-
-Please refer to Tutorial 2 for how to tweak the hyperparameters and the evolutionary algorithm.
