@@ -7,8 +7,11 @@
 We will perform LGP on the Iris dataset, from the [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/iris), to classify the species of a flower using the length and width of its sepals and petals.
 
 We will need three program files:
+
 Main.kt to run the program
+
 CustomOperatorsExperiment.kt to define the problem, i.e. how LGP should be setup and run
+
 CustomOperators.kt to define the custom operators
 
 ## Custom Operators
@@ -21,18 +24,19 @@ We'll add Median to our operations and see if it helps with the classification t
 
 ## Running
 
-Please download **Main.kt**, **CustomOperators.kt**, **CustomOperatorsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **ProgrammingTutorial2CustomOperators**.
+Please download **Main.kt**, **CustomOperators.kt**, **CustomOperatorsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial4**.
 
-In **ProgrammingTutorial2CustomOperators**, compile
+In **Tutorial4**, compile
 
 ```
-kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
+export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
+kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
 Run (please note that this problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so we are using the more advanced IslandMigration algorithm here, also **configuration.json** allows deeper and wider searches into the search space, so this may run for a while)
 
 ```
-kotlin -cp ../LGP.jar:../argparser.jar:../xenocom.jar:. Main configuration.json dataset.csv IslandMigration 4 10 10
+kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv IslandMigration 4 10 10
 ```
 
 ## Analysis
