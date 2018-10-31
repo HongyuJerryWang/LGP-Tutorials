@@ -13,8 +13,11 @@ The series starts 10 minutes before a meal and shows the patient immediately hea
 We want a program which can predict the blood sugar level given the current time and a time window of a few previous blood sugar levels. For example, assuming the time window size to be 3, using the given time 10 and the blood sugar levels at times 7, 8 and 9, the program should predict the blood sugar level at time 10.
 
 We will need three program files:
+
 Main.kt to run the program
+
 TimeSeriesExperiment.kt to define the problem, i.e. how LGP should be setup and run
+
 TimeSeriesExperimentCsvDatasetLoader.kt to load our dataset
 
 Please note, we need a custom dataset loader because of the specific way in which we want to format our data. The minimum for an LGP program is a main file and a problem definition file, and a good example would be the [linear regression experiment](https://github.com/JedS6391/LGP-Tutorial/tree/develop/src/main/kotlin/lgp/tutorial/linearRegression) program we used for our Non-Programming Tutorials, whose code this tutorial is based on.
