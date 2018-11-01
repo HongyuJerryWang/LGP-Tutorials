@@ -192,7 +192,9 @@ object CustomFitnessFunctions {
 It follows the same idea as our *verboseMatch* above, but produces a valid fitness value, which LGP will try to minimise, so we are counting mismatches instead of matches this time, by filtering out all the matches:
 
 ```
-!actual.equals(case.target)
+filter { (case, actual) ->
+    !actual.equals(case.target)
+}
 ```
 
 The fitness function returns a double:
