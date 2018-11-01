@@ -8,7 +8,7 @@ This tutorial is based on the [tutorial](https://github.com/JedS6391/LGP-Tutoria
 
 Please download **Main.kt**, **ProblemDefinition.kt**, **configuration1.json** and **dataset1.json** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial1**.
 
-In **Tutorial1**, compile with
+In **Tutorial1**, compile with:
 
 ```
 export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
@@ -21,7 +21,7 @@ The configuration determines the environment in which your LGP runs. The tutoria
 
 Here we make our own json file for our configuration. The configuration determines the the environment in which LGP will run, including things like the operators used, the values of constants, whether each of the inputs and the outputs is categorical, etc.
 
-Below is a minimum configuration file, taking advantage of the default parameters implemented in the API.
+Below is a minimum configuration file, taking advantage of the default parameters implemented in the API:
 
 ```
 {
@@ -74,7 +74,7 @@ The dataset is the data that you'd like to train your LGP with. Each sample in t
 
 Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}, i.e. y equals x_0 to the power of x_1](math1.jpg "y equals x_0 to the power of x_1") Please note, the features (x_0 and x_1) conforms with "featuresBeingCategorical" (both being numeric, so false for both) and the label (y) conforms with "outputsBeingCategorical" (being numeric, so false) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
 
-We store the data points in a CSV file.
+We store the data points in a CSV file:
 
 ```
 x_0,x_1,y
@@ -93,20 +93,20 @@ So we save our dataset file as "dataset1.csv". Just like the configuration, if w
 
 ## Run LGP on our own configuration and dataset
 
-We can run the program using this format.
+We can run the program using this format:
 
 ```
 kotlin -cp $CLASSPATH:. Main CONFIGURATION_FILENAME DATASET_FILENAME
 ```
 
-So we run the program on the files we just downloaded.
+So we run the program on the files we just downloaded:
 
 ```
 kotlin -cp $CLASSPATH:. Main configuration1.json dataset1.csv
 ```
 
 After running our own configuration and dataset a few times, we may get a perfect result, indicated by "bestFitness = 0.0":
-Please note that due to the stochastic nature of LGP, the result is likely to differ each time.
+Please note that due to the stochastic nature of LGP, the result is likely to differ each time:
 
 ```
 Results:
