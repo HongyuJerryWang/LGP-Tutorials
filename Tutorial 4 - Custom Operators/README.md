@@ -30,7 +30,7 @@ export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
 kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
-This problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so the more advanced IslandMigration algorithm is recommended, also in **configuration.json** we should allow deep and wide searches into the search space by specifying a larger population, more generations, more calculation registers, etc. Run with the command below, it may run for a while:
+This problem is somewhat more challenging than the problems in our previous tutorials, partially because it's a classification problem, so the more advanced IslandMigration algorithm is recommended, also in **configuration.json** we should allow deeper and wider searches into the search space by specifying a larger population, more generations, more calculation registers, etc. Run with the command below, it may run for a while:
 
 ```
 kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv IslandMigration 4 10 10
