@@ -72,7 +72,7 @@ So we save our configuration file as "configuration1.json". If we want another c
 
 The dataset is the data that you'd like to train your LGP with. Each sample in the dataset contains one or more features and one or more labels.
 
-Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}, i.e. y equals x_0 to the power of x_1](math1.jpg "y equals x_0 to the power of x_1") Please note, the features (x_0 and x_1) conforms with "featuresBeingCategorical" (both being numeric, so false for both) and the label (y) conforms with "outputsBeingCategorical" (being numeric, so false) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
+Suppose we have some data representing the non-linear function that ![y=x_0^{x_1}, i.e. y equals x_0 to the power of x_1](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%201%20-%20Configuration%20and%20Dataset/math1.jpg "y equals x_0 to the power of x_1") Please note, the features (x_0 and x_1) conforms with "featuresBeingCategorical" (both being numeric, so false for both) and the label (y) conforms with "outputsBeingCategorical" (being numeric, so false) in the configuration, also, the program we use treats the features and the label as double, so please use double values for this program. In a later tutorial we'll discuss how to make your own LGP that suits your data best.
 
 We store the data points in a CSV file:
 
