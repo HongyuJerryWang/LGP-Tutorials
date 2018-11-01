@@ -13,9 +13,9 @@ export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
 kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
-This tutorial does not include programming. We'll perform LGP on a synthetic symbolic regression benchmark, the Pagie-1 (![f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)](math1.jpg "(f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)"), defined by Pagie & Hogeweg in 1997). Which looks like
+This tutorial does not include programming. We'll perform LGP on a synthetic symbolic regression benchmark, the Pagie-1 (![f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/math1.jpg "(f(x0, x1) = 1 / (1 + x0 ^ -4) + 1 / (1 + x1 ^ -4)"), defined by Pagie & Hogeweg in 1997). Which looks like
 
-![Pagie-1](Pagie-1.png "Pagie-1.png")
+![Pagie-1](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1.png "Pagie-1.png")
 
 The original dataset can be found [here](https://github.com/PonyGE/PonyGE2/blob/master/datasets/Paige1/Train.txt).
 
@@ -92,7 +92,7 @@ If we inspect the expected and the actual values in testcase.csv, chances are th
 
 Hmm, we can quickly spot a problem, the best fitness has never improved since the first few generations (or not at all in some runs).
 
-![Pagie-1-1](Pagie-1-1.jpg "Best Fitness Line Graph for Pagie-1-1.json")
+![Pagie-1-1](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-1.jpg "Best Fitness Line Graph for Pagie-1-1.json")
 
 ## Running for more generations
 
@@ -221,7 +221,7 @@ meanEffectiveProgramLength = 50.59
 
 After a few tries and inspecting result.csv and testcases.txt, we find that the performance is equally bad, and the best fitness stops improving after the first few generations or has never improved.
 
-![Pagie-1-2](Pagie-1-2.jpg "Best Fitness Line Graph for Pagie-1-2.json")
+![Pagie-1-2](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-2.jpg "Best Fitness Line Graph for Pagie-1-2.json")
 
 ## Expanding the operations
 
@@ -320,7 +320,7 @@ meanEffectiveProgramLength = 49.84
 
 After a few tries, there are some better results. I get a best fitness of 0.24. Looks like division is one of the things we need.
 
-![Pagie-1-3](Pagie-1-3.jpg "Best Fitness Line Graph for Pagie-1-3.json")
+![Pagie-1-3](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-3.jpg "Best Fitness Line Graph for Pagie-1-3.json")
 
 ## Searching deeper and wider into the search space
 
@@ -410,7 +410,7 @@ meanEffectiveProgramLength = 15.794
 
 After a few tries, we find out the best fitness might differ quite a bit from run to run, but is in general better, as I get a best fitness of 0.18.
 
-![Pagie-1-4](Pagie-1-4.jpg "Best Fitness Line Graph for Pagie-1-4.json")
+![Pagie-1-4](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-4.jpg "Best Fitness Line Graph for Pagie-1-4.json")
 
 It should be noted that searching too deep or wide into the search space may take a painfully long time with little gain in performance, so please increase these hyperparameters bit by bit and observe the performance. Also, the greater the numCalculationRegisters, the bigger the search space, and if the search space is too big, the program might actually do worse, so please treat this hyperparameter with caution.
 
@@ -492,7 +492,7 @@ meanEffectiveProgramLength = 21.277
 
 After a few runs, seems it is not significantly better or worse, and I get a best fitness of 0.18.
 
-![Pagie-1-5](Pagie-1-5.jpg "Best Fitness Line Graph for Pagie-1-5.json")
+![Pagie-1-5](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-5.jpg "Best Fitness Line Graph for Pagie-1-5.json")
 
 In my experiments, making the mutations less often and drastic seemed to yield similar results.
 
@@ -582,7 +582,7 @@ meanEffectiveProgramLength = 19.52875
 
 After a few runs, I get a best fitness of 0.15.
 
-![Pagie-1-5 Island Migration](Pagie-1-5-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-5.json with Island Migration")
+![Pagie-1-5 Island Migration](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-5-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-5.json with Island Migration")
 
 ## Early stopping
 
@@ -656,7 +656,7 @@ meanEffectiveProgramLength = 10.39825
 
 After a few runs, I get a best fitness of 0.12.
 
-![Pagie-1-6 Island Migration](Pagie-1-6-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-6.json with Island Migration")
+![Pagie-1-6 Island Migration](https://github.com/HongyuJerryWang/LGP-Tutorials/blob/master/Tutorial%202%20-%20Evolutionary%20Algorithms%20and%20Hyperparameters/Pagie-1-6-IslandMigration.jpg "Best Fitness Line Graph for Pagie-1-6.json with Island Migration")
 
 ## Summary
 
