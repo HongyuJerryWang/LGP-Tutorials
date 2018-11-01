@@ -93,7 +93,7 @@ Please note, [argparser](https://github.com/xenomachina/kotlin-argparser) and [x
 
 ## Check
 
-Please download MyProblem.kt from this repository to a sub-directory of **LGP-Tutorials**, e.g. **Tutorial0Setup**. Then run this command in **Tutorial0Setup**
+Please download MyProblem.kt from this repository to a sub-directory of **LGP-Tutorials**, e.g. **Tutorial0**. Then run this command in **Tutorial0**
 
 ```
 kotlinc -cp ../LGP.jar -no-jdk -no-stdlib MyProblem.kt
