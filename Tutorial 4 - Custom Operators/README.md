@@ -362,7 +362,13 @@ abstract class TernaryOperation<T>(func: (Arguments<T>) -> T) : Operation<T>(Cus
 }
 ```
 
-The function for Median gets the median value of 3 values:
+The median of the three values is calculated as **median(a, b, c) = max(min(a, b), min(max(a, b), c))**. Here's the mathematical reasoning behind it: Given three different values **a**, **b** and **c**,
+1. **min(a, b)** can't be the greatest of the three, and **min(max(a, b), c)** can't be the greatest of the three either, so the whole **max(min(a, b), min(max(a, b), c))** can't be the greatest of the three;
+2. **min(a, b)** can't be **max(a, b)**, so it can't be **min(max(a, b), c)** either, so the whole **max(min(a, b), min(max(a, b), c))** can't be the smallest of the three.
+
+Therefore **max(min(a, b), min(max(a, b), c))** can only be the median of the three. If some of the three values are the same, please modify the reasoning above, and it should still work.
+
+We define the function for Median, which takes three arguments indexed from 0 to 2 as it is a ternary operation:
 
 ```
 class Median : TernaryOperation<Double>(
