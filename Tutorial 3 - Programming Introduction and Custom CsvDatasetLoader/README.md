@@ -23,18 +23,19 @@ Please note, we need a custom dataset loader because of the specific way in whic
 
 Download **Main.kt**, **TimeSeriesExperiment.kt**, **TimeSeriesExperimentCsvDatasetLoader.kt**, **configuration.json** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial3**.
 
-In **Tutorial3**, compile
+In **Tutorial3**, compile:
 
 ```
-kotlinc -cp ../LGP.jar:../argparser.jar:../xenocom.jar -no-stdlib *.kt
+export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
+kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
 Please note, LGP.jar contains the Kotlin standard library, so *-no-stdlib* is added to avoid warnings.
 
-Run
+Run:
 
 ```
-kotlin -cp LGP.jar:argparser.jar:xenocom.jar:. Main configuration.json dataset.csv 3
+kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv 3
 ```
 
 The arguments used: the configuration file, the dataset file and the time window size. The number of features stated in the configuration file as featuresBeingCategorical is 4, which is the 3 previous blood sugar levels plus the given time. Please make sure the number of features is greater than the time window size by 1 when you experiment with different time window sizes.
