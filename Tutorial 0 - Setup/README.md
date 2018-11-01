@@ -41,37 +41,37 @@ If you don't have git on your UNIX based system, please install git with:
 sudo apt install git
 ```
 
-The API is in this [repository](https://github.com/JedS6391/LGP), please clone it to the local directory of your choice.
+The API is in this [repository](https://github.com/JedS6391/LGP), please clone it to the local directory of your choice:
 
 ```
 git clone https://github.com/JedS6391/LGP.git
 ```
 
-Using the Command Line, change into the directory
+Using the Command Line, change into the directory:
 
 ```
 cd LGP
 ```
 
-To see if you have Java installed
+To see if you have Java installed:
 
 ```
 java -version
 ```
 
-If you don't have Java, please install Java with
+If you don't have Java, please install Java with:
 
 ```
 sudo apt install default-jre
 ```
 
-and then
+and then:
 
 ```
 sudo apt install default-jdk
 ```
 
-With Java installed, build the API with
+With Java installed, build the API with:
 
 ```
 ./gradlew coreJar
@@ -93,19 +93,21 @@ Please note, [argparser](https://github.com/xenomachina/kotlin-argparser) and [x
 
 ## Check
 
-Please download MyProblem.kt from this repository to a sub-directory of **LGP-Tutorials**, e.g. **Tutorial0**. Then run this command in **Tutorial0**
+Please download MyProblem.kt from this repository to a sub-directory of **LGP-Tutorials**, e.g. **Tutorial0**.
+
+In **Tutorial0**, compile:
 
 ```
 kotlinc -cp ../LGP.jar -no-jdk -no-stdlib MyProblem.kt
 ```
 
-Then run this command
+Run:
 
 ```
 kotlin -cp ../LGP.jar:. MyProblemKt
 ```
 
-If the items are installed correctly, you should see the following output
+If the items are installed correctly, you should see the following output:
 
 ```
 My Problem
