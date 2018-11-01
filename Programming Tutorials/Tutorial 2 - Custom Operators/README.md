@@ -9,11 +9,11 @@ We will perform LGP on the Iris dataset, from the [UCI Machine Learning Reposito
 We will need three program files:
 1. Main.kt to run the program
 2. CustomOperatorsExperiment.kt to define the problem, i.e. how LGP should be setup and run
-3. CustomOperators.kt to define the custom operators
+3. CustomOperators.kt to define the custom mutation operators and the custom instruction operators
 
 ## Custom Operators
 
-We'll make some custom operators for this problem: a CustomMacroMutationOperator, a CustomMicroMutationOperator and a ternary operator called Median to return the median of three operands.
+We'll make some custom operators for this problem: a CustomMacroMutationOperator, a CustomMicroMutationOperator and a ternary instruction operator called Median to return the median of three operands.
 
 The default macro and micro mutation operators in the LGP API do not mutate instructions deemed ineffective, i.e. instructions that have no influence on the final result, but as we do crossovers, swapping parts of the programs, ineffective instructions might become effective as the context will have changed. Therefore, we'll make custom macro and micro mutation operators that don't ignore ineffective instructions.
 
@@ -38,13 +38,36 @@ kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv IslandMigration 4 10
 
 ## Analysis
 
-When there are categorical inputs or outputs, they need to be vectorized in one-hot encoding for the training process. Please fill in featuresBeingCategorical and outputsBeingCategorical accordingly in **configuration.json** and call the *vectorize* method:
+When there are categorical inputs or outputs, they need to be vectorized in one-hot encoding for the training process. Please fill in featuresBeingCategorical and outputsBeingCategorical accordingly in **configuration.json**:
+
+```
+"featuresBeingCategorical": [false, false, false, false],
+"outputsBeingCategorical": [true]
+```
+
+Call the *vectorize* method:
 
 ```
 private val vectorization = CsvDatasetLoader.vectorize(this.datasetFilename, this.configuration.featuresBeingCategorical.map { value -> value.toBoolean() }, this.configuration.outputsBeingCategorical.map { value -> value.toBoolean() })
 private val inputVectorization = vectorization.first
 private val outputVectorization = vectorization.second
 ```
+
+This information will help encode the data. Here are three sample rolls from the original dataset:
+
+sepal_length | sepal_width | petal_length | petal_width | species
+---|---|---|---|---
+5.1 | 3.5 | 1.4 | 0.2 | Iris-setosa
+7.0 | 3.2 | 4.7 | 1.4 | Iris-versicolor
+6.3 | 3.3 | 6.0 | 2.5 | Iris-virginica
+
+It will be encoded into:
+
+sepal_length | sepal_width | petal_length | petal_width | species_being_Iris-setosa | species_being_Iris-versicolor | species_being_Iris-virginica
+---|---|---|---|---|---|---
+5.1 | 3.5 | 1.4 | 0.2 | 1.0 | 0.0 | 0.0
+7.0 | 3.2 | 4.7 | 1.4 | 0.0 | 1.0 | 0.0
+6.3 | 3.3 | 6.0 | 2.5 | 0.0 | 0.0 | 1.0
 
 This vectorization will be used in multiple places to ensure the correct training of the program and the production of the resulting C program:
 
@@ -112,7 +135,7 @@ val translated = ExtendedProgramTranslator(true, solution.inputVectorization, so
 
 The vectorization mechanism is compatible with non-categorical inputs and outputs (e.g. numeric values). In fact, the program for the non-programming tutorial is integrated with vectorization as well, and can deal with both categorical and non-categorical values.
 
-Besides that, the **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom operators you want to use:
+Besides that, the **Main.kt** and **CustomOperatorsExperiment.kt** files are very similar to our files in the last tutorial, please just make sure you indeed use the custom mutation operators you want to use:
 
 ```
 // Use the custom macro-mutation operator.
@@ -134,7 +157,7 @@ CoreModuleType.MicroMutationOperator to { environment ->
 }
 ```
 
-Please also make sure to add the Median operator to the list of operations in our configuration file:
+Please also make sure to add the Median instruction operator to the list of operations in our configuration file:
 
 ```
 "operations": [
@@ -198,7 +221,7 @@ else if (programLength > minimumProgramLength &&
 
 ### CustomMicroMutationOperator
 
-A micro mutation is changing a register or the operator of an instruction, or changing a constant value of the program:
+A micro mutation is changing a register or the instruction operator of an instruction, or changing a constant value of the program:
 
 ```
 private enum class MicroMutationType {
@@ -263,7 +286,7 @@ MicroMutationType.Register -> {
 }
 ```
 
-To perform an operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more:
+To perform an instruction operator mutation, we copy the operation from a random instruction in the program to this instruction, deleting operands if we need fewer of them, and adding random operands if we need more:
 
 ```
 MicroMutationType.Operator -> {
@@ -349,7 +372,7 @@ class Median : TernaryOperation<Double>(
 )
 ```
 
-Give some information regarding the operator. The representation is used to help format the program in the command line interface:
+We need to give the instruction operator some description. The representation is used to help format the program in the command line interface:
 
 ```
 override val representation = "Median"
