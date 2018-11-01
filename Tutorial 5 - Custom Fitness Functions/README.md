@@ -32,14 +32,14 @@ It is important for an electric circuit to get the output totally right. For exa
 
 Please download **Main.kt**, **CustomFitnessFunctions.kt**, **CustomFitnessFunctionsExperiment.kt**, **configuration.kt** and **dataset.csv** from this repository into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial5**.
 
-In **Tutorial5**, compile
+In **Tutorial5**, compile:
 
 ```
 export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
 kotlinc -cp $CLASSPATH -no-stdlib *.kt
 ```
 
-Run
+Run:
 
 ```
 kotlin -cp $CLASSPATH:. Main configuration.json dataset.csv
