@@ -66,21 +66,16 @@ class Main {
         private lateinit var migrationInterval: String
         private lateinit var migrationSize: String
 
-        private val verboseBinary = object : FitnessFunction<Double>() {
+        private val verboseMatch = object : FitnessFunction<Double>() {
 
             override fun fitness(outputs: List<List<Double>>, cases: List<FitnessCase<Double>>): Double {
-                val difference = cases.zip(outputs).map { (case, actual) ->
-                    val expected = case.target
-                    Math.abs(actual.zip(expected).map { (singleActual, singleExpected) ->
-                        singleActual - singleExpected
-                    }.reduce { moreSignificantBit: Double, lessSignificantBit: Double ->
-                        moreSignificantBit * 2.0 + lessSignificantBit
-                    })
-                }.average()
+                val numMatches = cases.zip(outputs).filter { (case, actual) ->
+                    actual.equals(case.target)
+                }.count()
 
                 File("testcases.txt").bufferedWriter().use { out ->
 
-                    out.write("The average difference is ${difference}.\n")
+                    out.write("$numMatches matches out of ${ outputs.count() } cases.\n")
 
                     cases.zip(outputs).map { (expected, actual) ->
                         out.write("\tExpected: ${expected.target}, Actual: $actual\n")
@@ -177,7 +172,7 @@ class Main {
             }
 
             // Execute fitness function and discard the result
-            this.verboseBinary(outputs, fitnessCases)
+            this.verboseMatch(outputs, fitnessCases)
         }
     }
 }

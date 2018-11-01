@@ -61,7 +61,7 @@ class CustomFitnessFunctionsExperiment(
     // Set the default value of any registers to 1.0.
     override val defaultValueProvider = DefaultValueProviders.constantValueProvider(1.0)
     // Use the mean-squared error fitness function.
-    override val fitnessFunction = CustomFitnessFunctions.binaryMSE
+    override val fitnessFunction = CustomFitnessFunctions.match
     // Define the modules to be used for the core evolutionary operations.
     override val registeredModules = ModuleContainer<Double>(modules = mutableMapOf(
             // Generate instructions using the built-in instruction generator.

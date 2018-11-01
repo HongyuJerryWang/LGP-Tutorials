@@ -1,4 +1,4 @@
-The average difference is 0.0.
+8 matches out of 8 cases.
 	Expected: [0.0, 0.0], Actual: [0.0, 0.0]
 	Expected: [0.0, 1.0], Actual: [0.0, 1.0]
 	Expected: [0.0, 1.0], Actual: [0.0, 1.0]
