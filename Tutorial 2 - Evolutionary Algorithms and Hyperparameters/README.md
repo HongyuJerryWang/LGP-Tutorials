@@ -6,7 +6,7 @@
 
 Please download **Pagie-1-1.json**, **Pagie-1-2.json**, **Pagie-1-3.json**, **Pagie-1-4.json**, **Pagie-1-5.json**, **Pagie-1-6.json** and **Pagie-1.csv** from this repository, and move a copy of **Main.kt** and **ProblemDefinition.kt** from the previous tutorial, into a sub-directory of **LGP-Tutorials**, e.g. **Tutorial2**.
 
-In **Tutorial2**, compile with
+In **Tutorial2**, compile with:
 
 ```
 export CLASSPATH=../LGP.jar:../argparser.jar:../xenocom.jar
@@ -21,7 +21,7 @@ The original dataset can be found [here](https://github.com/PonyGE/PonyGE2/blob/
 
 ## Running the default configuration
 
-This configuration file mostly relies on the default hyperparameter values and only specifies the minimum information needed.
+This configuration file mostly relies on the default hyperparameter values and only specifies the minimum information needed:
 
 ```
 {
@@ -36,7 +36,7 @@ This configuration file mostly relies on the default hyperparameter values and o
 }
 ```
 
-Now let's just run our configuration on our dataset.
+Now let's just run our configuration on our dataset:
 
 ```
 kotlin -cp $CLASSPATH:. Main Pagie-1-1.json Pagie-1.csv
@@ -96,13 +96,13 @@ Hmm, we can quickly spot a problem, the best fitness has never improved since th
 
 ## Running for more generations
 
-The fact is, the default generation number, 50, is too small for most of the problems, let's use **Pagie-1-2.json**, which specifies a larger number of generations
+The fact is, the default generation number, 50, is too small for most of the problems, let's use **Pagie-1-2.json**, which specifies a larger number of generations:
 
 ```
 "generations": 1000
 ```
 
-It is recommended that we keep the old file as a change may make the performance either better or worse.
+It is recommended that we keep the old file as a change may make the performance either better or worse:
 
 ```
 kotlin -cp $CLASSPATH:. Main Pagie-1-2.json Pagie-1.csv
@@ -225,7 +225,7 @@ After a few tries and inspecting result.csv and testcases.txt, we find that the 
 
 ## Expanding the operations
 
-Maybe it's the operations we have, as the default set of addition, subtraction and multiplication is quite limited. Let's add division to our operations and see if anything improves.
+Maybe it's the operations we have, as the default set of addition, subtraction and multiplication is quite limited. Let's add division to our operations and see if anything improves:
 
 ```
 "operations": [
@@ -324,7 +324,7 @@ After a few tries, there are some better results. I get a best fitness of 0.24. 
 
 ## Searching deeper and wider into the search space
 
-We see that the fitness is improving, which is good, but once in a few hundred generations, which is a bit slow. We can give the program more registers, more variant program length, a bigger population and a greater number of offspring. So the program can search deeper and wider into the search space.
+We see that the fitness is improving, which is good, but once in a few hundred generations, which is a bit slow. We can give the program more registers, more variant program length, a bigger population and a greater number of offspring. So the program can search deeper and wider into the search space:
 
 ```
 "initialMinimumProgramLength": 20,
@@ -336,7 +336,7 @@ We see that the fitness is improving, which is good, but once in a few hundred g
 "numOffspring": 50
 ```
 
-Let's see if that improves anything.
+Let's see if that improves anything:
 
 ```
 kotlin -cp $CLASSPATH:. Main Pagie-1-4.json Pagie-1.csv
@@ -416,7 +416,7 @@ It should be noted that searching too deep or wide into the search space may tak
 
 ## Changing the mutation rates
 
-Let's try making the mutations more often and drastic, and see if anything improves.
+Let's try making the mutations more often and drastic, and see if anything improves:
 
 ```
 "crossoverRate": 0.8,
@@ -498,7 +498,7 @@ In my experiments, making the mutations less often and drastic seemed to yield s
 
 ## Experimenting with the evolutionary algorithms
 
-Here's something else we can try, as there's another evolutionary algorithm we can try, called Island Migration, which may help the performance by seperating the evolution process into islands. In Island Migration, each island runs its own LGP like the normal LGP we just performed, for a specified number of generations, then a specified number of individuals migrate to between islands. This process is repeated until the maximum number of generations is reached or a solution with a perfect fitness (i.e. 0) is found. This numberOfRunsalgorithm tends to maintain a greater diversity of individuals than our normal evolutionary algorithm (i.e. Steady State). Let's try it out. So we add a few more command line arguments, specifying that we want to use Island Migration, the number of Islands we want, the migration interval and the migration size. For example, here we have 4 islands, migration happens every 10 generations, and each time 10 individuals migrate from one island to another.
+Here's something else we can try, as there's another evolutionary algorithm we can try, called Island Migration, which may help the performance by seperating the evolution process into islands. In Island Migration, each island runs its own LGP like the normal LGP we just performed, for a specified number of generations, then a specified number of individuals migrate to between islands. This process is repeated until the maximum number of generations is reached or a solution with a perfect fitness (i.e. 0) is found. This numberOfRunsalgorithm tends to maintain a greater diversity of individuals than our normal evolutionary algorithm (i.e. Steady State). Let's try it out. So we add a few more command line arguments, specifying that we want to use Island Migration, the number of Islands we want, the migration interval and the migration size. For example, here we have 4 islands, migration happens every 10 generations, and each time 10 individuals migrate from one island to another:
 
 ```
 kotlin -cp $CLASSPATH:. Main Pagie-1-5.json Pagie-1.csv IslandMigration 4 10 10
@@ -586,7 +586,7 @@ After a few runs, I get a best fitness of 0.15.
 
 ## Early stopping
 
-We can see in the graph above that the best fitness reached 0.13 at one point, but went back up again, maybe we can tell the program to stop once the best fitness drops below 0.14.
+We can see in the graph above that the best fitness reached 0.13 at one point, but went back up again, maybe we can tell the program to stop once the best fitness drops below 0.14:
 
 ```
 "stoppingCriterion": 0.14
@@ -662,7 +662,7 @@ After a few runs, I get a best fitness of 0.12.
 
 So we have managed to improve the performance quite a bit along the way, withour doing any programming.
 
-It should be noted that LGP is stochastic, therefore different runs will give different results. You may need to do 3 to 5 runs to get an idea of how good a configuration is. For the clarity of this tutorial, the configuration files use single runs. Specify
+It should be noted that LGP is stochastic, therefore different runs will give different results. You may need to do 3 to 5 runs to get an idea of how good a configuration is. For the clarity of this tutorial, the configuration files use single runs. Specify:
 
 ```
 "numberOfRuns": 10
