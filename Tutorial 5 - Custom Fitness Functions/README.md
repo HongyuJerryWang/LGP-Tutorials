@@ -1,4 +1,4 @@
-# LGP Programming Tutorial 3: Custom Fitness Functions
+# LGP Tutorial 5: Custom Fitness Functions
 
 > *Making custom fitness functions for a specific problem
 
