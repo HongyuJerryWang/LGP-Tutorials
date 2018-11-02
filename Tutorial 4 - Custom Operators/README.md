@@ -1,4 +1,4 @@
-# LGP Programming Tutorial 2: Custom Operators
+# LGP Tutorial 4: Custom Operators
 
 > *Making custom operators for a specific problem
 
