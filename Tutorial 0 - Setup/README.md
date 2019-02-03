@@ -41,7 +41,7 @@ If you don't have git on your UNIX based system, please install git with:
 sudo apt install git
 ```
 
-The API is in this [repository](https://github.com/JedS6391/LGP), please clone it to the local directory of your choice:
+The API is in this [repository](https://github.com/HongyuJerryWang/LGP), please clone it to the local directory of your choice:
 
 ```
 git clone https://github.com/JedS6391/LGP.git
